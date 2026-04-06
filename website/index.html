@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quickstop Super Deli | Bellport, NY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deli-red: #D62828;
+            --deli-yellow: #F7B32B;
+            --deli-cream: #FFF8E7;
+            --deli-dark: #1A1A1A;
+            --deli-brown: #5C4033;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deli-cream);
+            color: var(--deli-dark);
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 248, 231, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--deli-dark);
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-red);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo-text span {
+            color: var(--deli-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deli-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--deli-red);
+        }
+
+        .order-btn {
+            background: var(--deli-red);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+            box-shadow: 4px 4px 0 var(--deli-dark);
+        }
+
+        .order-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5rem;
+            padding: 6rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-logo {
+            flex-shrink: 0;
+        }
+
+        .hero-logo img {
+            width: 340px;
+            height: auto;
+            filter: drop-shadow(4px 4px 0 var(--deli-dark));
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 550px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(247, 179, 43, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(214, 40, 40, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            animation: fadeSlideDown 0.8s ease-out;
+            box-shadow: 3px 3px 0 var(--deli-dark);
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 0.9;
+            color: var(--deli-dark);
+            margin-bottom: 1rem;
+            animation: fadeSlideUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .super {
+            color: var(--deli-red);
+            display: block;
+            font-size: 1.2em;
+            text-shadow: 6px 6px 0 var(--deli-yellow);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--deli-brown);
+            max-width: 450px;
+            margin: 0 auto 2rem;
+            animation: fadeSlideUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeSlideUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: var(--deli-red);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            box-shadow: 5px 5px 0 var(--deli-dark);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--deli-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--deli-dark);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 3px solid var(--deli-dark);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--deli-dark);
+            color: var(--deli-cream);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 32px;
+            height: 32px;
+            color: var(--deli-brown);
+        }
+
+        /* Info Strip */
+        .info-strip {
+            background: var(--deli-dark);
+            color: var(--deli-cream);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .info-item svg {
+            width: 24px;
+            height: 24px;
+            color: var(--deli-yellow);
+        }
+
+        .info-item strong {
+            color: var(--deli-yellow);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: var(--deli-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--deli-brown);
+            font-size: 1.2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 3px solid var(--deli-dark);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 6px 6px 0 var(--deli-dark);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--deli-dark);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--deli-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--deli-dark);
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: var(--deli-dark);
+        }
+
+        .feature-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+            color: var(--deli-dark);
+        }
+
+        .feature-card p {
+            color: var(--deli-brown);
+            line-height: 1.6;
+        }
+
+        /* Menu Preview */
+        .menu-preview {
+            background: var(--deli-red);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-preview::before {
+            content: 'MENU';
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20rem;
+            color: rgba(0,0,0,0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .menu-preview .section-header h2,
+        .menu-preview .section-header p {
+            color: var(--deli-cream);
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-tag {
+            background: var(--deli-cream);
+            color: var(--deli-dark);
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            border: 3px solid var(--deli-dark);
+            box-shadow: 4px 4px 0 var(--deli-dark);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .menu-tag:hover {
+            background: var(--deli-yellow);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        /* Delivery Section */
+        .delivery {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .delivery-apps {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .delivery-app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: white;
+            border: 3px solid var(--deli-dark);
+            border-radius: 8px;
+            box-shadow: 5px 5px 0 var(--deli-dark);
+            text-decoration: none;
+            color: var(--deli-dark);
+            transition: all 0.3s;
+            min-width: 180px;
+        }
+
+        .delivery-app:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--deli-dark);
+        }
+
+        .delivery-app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .delivery-app-icon.order-direct {
+            background: var(--deli-red);
+            color: white;
+        }
+
+        .delivery-app.order-direct-card {
+            border-color: var(--deli-red);
+            box-shadow: 5px 5px 0 var(--deli-red);
+            position: relative;
+        }
+
+        .delivery-app.order-direct-card:hover {
+            box-shadow: 8px 8px 0 var(--deli-red);
+        }
+
+        .direct-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 2px solid var(--deli-dark);
+        }
+
+        .delivery-app-icon.grubhub {
+            background: #F63440;
+            color: white;
+        }
+
+        .delivery-app-icon.doordash {
+            background: #FF3008;
+            color: white;
+        }
+
+        .delivery-app span {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Location Section */
+        .location {
+            background: var(--deli-dark);
+            color: var(--deli-cream);
+            padding: 6rem 2rem;
+        }
+
+        .location-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .location-info h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .location-info h2 span {
+            color: var(--deli-yellow);
+        }
+
+        .location-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .location-detail svg {
+            width: 24px;
+            height: 24px;
+            color: var(--deli-yellow);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .location-detail p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .location-detail strong {
+            color: var(--deli-yellow);
+        }
+
+        .map-container {
+            border-radius: 8px;
+            height: 350px;
+            border: 4px solid var(--deli-yellow);
+            overflow: hidden;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deli-dark);
+            border-top: 4px solid var(--deli-yellow);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo-img {
+            height: 150px;
+            width: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        footer p {
+            color: rgba(255, 248, 231, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .hero {
+                gap: 3rem;
+            }
+
+            .hero-logo img {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                gap: 2rem;
+                padding-top: 7rem;
+            }
+
+            .hero-logo img {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-logo img {
+                width: 150px;
+            }
+
+            .hero h1 {
+                font-size: clamp(3rem, 12vw, 6rem);
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .info-strip {
+                gap: 1.5rem;
+            }
+
+            .location-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .map-placeholder {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo-text">QUICKSTOP <span>SUPER DELI</span></a>
+        <div class="nav-links">
+            <a href="menu.html">Menu</a>
+            <a href="#delivery">Delivery</a>
+            <a href="#location">Location</a>
+            <a href="order.html" class="order-btn">Order Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+
+        <div class="hero-logo">
+            <img src="logo.png" alt="Quickstop Super Deli">
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Right Across from Bellport LIRR
+            </div>
+
+            <h1>
+                QUICKSTOP
+                <span class="super">SUPER DELI</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Your neighborhood spot for classic New York sandwiches, hot food, and everything you need — open early for the morning commute.
+            </p>
+
+            <div class="hero-ctas">
+                <a href="order.html" class="btn-primary">Order Online</a>
+                <a href="menu.html" class="btn-secondary">See Menu</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Info Strip -->
+    <div class="info-strip">
+        <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Open <strong>5AM – 7PM</strong> Daily</span>
+        </div>
+        <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span><strong>461 Station Rd</strong>, Bellport NY</span>
+        </div>
+        <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span><strong>Delivery</strong> Available</span>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-header">
+            <h2>Why Super Deli?</h2>
+            <p>Your quick stop before catching the train</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3>Open at 5AM</h3>
+                <p>Grab breakfast, coffee, and everything you need before the morning train. We're ready when you are.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18z" />
+                    </svg>
+                </div>
+                <h3>Fresh Made Daily</h3>
+                <p>Classic deli sandwiches, hot heroes, chicken over rice, and comfort food made fresh to order.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </div>
+                <h3>Convenience Store</h3>
+                <p>Snacks, drinks, groceries, and essentials. Everything a neighborhood store should have.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview -->
+    <section id="menu" class="menu-preview">
+        <div class="section-header">
+            <h2>What We Serve</h2>
+            <p>Classic New York deli favorites & more</p>
+        </div>
+
+        <div class="menu-categories">
+            <span class="menu-tag">Breakfast Sandwiches</span>
+            <span class="menu-tag">Cold Cut Heroes</span>
+            <span class="menu-tag">Hot Sandwiches</span>
+            <span class="menu-tag">Chicken Over Rice</span>
+            <span class="menu-tag">Burgers & Wraps</span>
+            <span class="menu-tag">Salads</span>
+            <span class="menu-tag">Coffee & Drinks</span>
+            <span class="menu-tag">Snacks & Groceries</span>
+        </div>
+        <a href="menu.html" class="btn-primary" style="margin-top: 2rem;">View Full Menu</a>
+    </section>
+
+    <!-- Delivery Section -->
+    <section id="delivery" class="delivery">
+        <div class="section-header">
+            <h2>Order Delivery</h2>
+            <p>Get Super Deli delivered to your door</p>
+        </div>
+
+        <div class="delivery-apps">
+            <a href="order.html" class="delivery-app order-direct-card">
+                <span class="direct-badge">No Fees</span>
+                <div class="delivery-app-icon order-direct">🏪</div>
+                <span>Order Direct</span>
+            </a>
+            <a href="https://www.doordash.com/convenience/store/quick-stop-super-deli-bellport-36500379/" target="_blank" rel="noopener" class="delivery-app">
+                <div class="delivery-app-icon doordash">🚗</div>
+                <span>DoorDash</span>
+            </a>
+            <a href="https://www.grubhub.com/restaurant/quick-stop-super-deli-461-station-rd-bellport/12684712" target="_blank" rel="noopener" class="delivery-app">
+                <div class="delivery-app-icon grubhub">🥡</div>
+                <span>Grubhub</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="location">
+        <div class="location-content">
+            <div class="location-info">
+                <h2>Find <span>Us</span></h2>
+                
+                <div class="location-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p>
+                        <strong>461 Station Rd, Bellport, NY 11713</strong><br>
+                        Right across from the Bellport LIRR station
+                    </p>
+                </div>
+
+                <div class="location-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p>
+                        <strong>Hours</strong><br>
+                        Monday – Sunday: 5:00 AM – 7:00 PM
+                    </p>
+                </div>
+
+                <div class="location-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <p>
+                        <strong>Call Ahead</strong><br>
+                        (631) 286-1491
+                    </p>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <iframe
+                    src="https://maps.google.com/maps?q=461+Station+Rd,+Bellport,+NY+11713&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    allowfullscreen=""
+                    loading="lazy"
+                    title="Quickstop Super Deli Location">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <img src="logo.png" alt="Quickstop Super Deli" class="footer-logo-img">
+        <p>© 2026 Quickstop Super Deli. Bellport, Long Island, NY.</p>
+    </footer>
+</body>
+</html>

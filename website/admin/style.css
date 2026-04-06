@@ -1,0 +1,528 @@
+/* ============================================================
+   Quickstop Super Deli — Admin Dashboard Styles
+   ============================================================ */
+
+:root {
+    --deli-red: #D62828;
+    --deli-yellow: #F7B32B;
+    --deli-cream: #FFF8E7;
+    --deli-dark: #1A1A1A;
+    --deli-brown: #5C4033;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deli-cream);
+    color: var(--deli-dark);
+    min-height: 100vh;
+}
+
+/* ── Login Screen ── */
+
+.login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.login-card {
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 var(--deli-dark);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--deli-red);
+    letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+}
+
+.login-card .subtitle {
+    color: var(--deli-brown);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.pin-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    background: var(--deli-cream);
+}
+.pin-input:focus {
+    outline: none;
+    border-color: var(--deli-red);
+    background: white;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--deli-red);
+    color: white;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--deli-dark);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--deli-dark);
+}
+.login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 4px 4px 0 var(--deli-dark);
+}
+
+.login-error {
+    color: var(--deli-red);
+    font-weight: 600;
+    margin-top: 1rem;
+    display: none;
+}
+.login-error.visible { display: block; }
+
+/* ── Dashboard Layout ── */
+
+.dashboard { display: none; }
+.dashboard.visible { display: block; }
+
+.dash-header {
+    background: var(--deli-dark);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.dash-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--deli-cream);
+    letter-spacing: 2px;
+}
+.dash-title span { color: var(--deli-yellow); }
+
+.dash-logout {
+    background: none;
+    border: 2px solid var(--deli-cream);
+    color: var(--deli-cream);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.dash-logout:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* ── Tab Navigation ── */
+
+.tab-nav {
+    display: flex;
+    background: white;
+    border-bottom: 3px solid var(--deli-dark);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    color: var(--deli-brown);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    white-space: nowrap;
+}
+.tab-btn.active {
+    color: var(--deli-red);
+    border-bottom-color: var(--deli-red);
+}
+.tab-btn:hover:not(.active) {
+    color: var(--deli-dark);
+    background: var(--deli-cream);
+}
+
+/* ── Tab Content ── */
+
+.tab-content { display: none; padding: 2rem; max-width: 800px; margin: 0 auto; }
+.tab-content.visible { display: block; }
+
+/* ── Section Cards ── */
+
+.admin-card {
+    background: white;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 var(--deli-dark);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--deli-dark);
+    color: var(--deli-cream);
+    padding: 0.85rem 1.25rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.card-body { padding: 1.25rem; }
+
+/* ── Form Elements ── */
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #eee;
+}
+.setting-row:last-child { border-bottom: none; }
+
+.setting-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.setting-desc {
+    font-size: 0.8rem;
+    color: var(--deli-brown);
+    margin-top: 0.15rem;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #ccc;
+    border-radius: 28px;
+    border: 2px solid var(--deli-dark);
+    transition: background 0.3s;
+}
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 20px; width: 20px;
+    left: 2px; bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    border: 1px solid var(--deli-dark);
+}
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--deli-red);
+}
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(24px);
+}
+
+/* Number/Text Inputs */
+.setting-input {
+    width: 120px;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    text-align: right;
+    background: var(--deli-cream);
+}
+.setting-input:focus {
+    outline: none;
+    border-color: var(--deli-red);
+    background: white;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--deli-yellow);
+    color: var(--deli-dark);
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--deli-dark);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 1rem;
+}
+.save-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--deli-dark);
+}
+.save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.save-status {
+    text-align: center;
+    margin-top: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: none;
+}
+.save-status.success { display: block; color: forestgreen; }
+.save-status.error { display: block; color: var(--deli-red); }
+
+/* ── Specials ── */
+
+.specials-list { margin-bottom: 1rem; }
+
+.special-card {
+    background: white;
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 2px 2px 0 var(--deli-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.special-info { flex: 1; }
+.special-title {
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+}
+.special-desc {
+    color: var(--deli-brown);
+    font-size: 0.85rem;
+}
+.special-meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    flex-wrap: wrap;
+}
+.special-tag {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.special-tag.day {
+    background: var(--deli-yellow);
+    color: var(--deli-dark);
+}
+.special-tag.active {
+    background: rgba(34, 139, 34, 0.15);
+    color: forestgreen;
+}
+.special-tag.inactive {
+    background: rgba(214, 40, 40, 0.1);
+    color: var(--deli-red);
+}
+
+.special-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.75rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-edit { background: var(--deli-cream); color: var(--deli-dark); }
+.btn-edit:hover { background: var(--deli-yellow); }
+.btn-delete { background: var(--deli-red); color: white; border-color: var(--deli-red); }
+.btn-delete:hover { opacity: 0.85; }
+
+.add-special-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--deli-cream);
+    border: 2px dashed var(--deli-dark);
+    border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: var(--deli-brown);
+}
+.add-special-btn:hover {
+    background: white;
+    color: var(--deli-dark);
+}
+
+/* ── Special Form Modal ── */
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26, 26, 26, 0.7);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.modal-overlay.visible { display: flex; }
+
+.modal {
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: 10px;
+    box-shadow: 6px 6px 0 var(--deli-dark);
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 2px solid var(--deli-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+}
+.modal-close {
+    width: 32px; height: 32px;
+    background: var(--deli-cream);
+    border: 2px solid var(--deli-dark);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-close:hover { background: var(--deli-red); color: white; }
+
+.modal-body { padding: 1.5rem; }
+
+.form-row {
+    margin-bottom: 1rem;
+}
+.form-row:last-child { margin-bottom: 0; }
+.form-row label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    font-size: 0.95rem;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--deli-cream);
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    outline: none;
+    border-color: var(--deli-red);
+    background: white;
+}
+.form-row textarea { resize: vertical; min-height: 80px; }
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 2px solid var(--deli-dark);
+}
+
+/* ── PIN Change ── */
+
+.pin-section { margin-top: 0.5rem; }
+.pin-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* ── Toast ── */
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--deli-dark);
+    color: var(--deli-cream);
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 2000;
+    transition: transform 0.3s;
+    white-space: nowrap;
+}
+.toast.visible { transform: translateX(-50%) translateY(0); }
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+    .dash-header { padding: 0.75rem 1rem; }
+    .tab-content { padding: 1.25rem; }
+    .setting-row { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .setting-input { width: 100%; text-align: left; }
+    .pin-row { grid-template-columns: 1fr; }
+    .special-card { flex-direction: column; }
+    .special-actions { width: 100%; }
+    .btn-sm { flex: 1; text-align: center; }
+}

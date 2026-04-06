@@ -1,0 +1,592 @@
+/* ============================================================
+   Quickstop Super Deli — Store Order Dashboard Styles
+   ============================================================ */
+
+:root {
+    --deli-red: #D62828;
+    --deli-yellow: #F7B32B;
+    --deli-cream: #FFF8E7;
+    --deli-dark: #1A1A1A;
+    --deli-brown: #5C4033;
+    --status-pending: #E67E22;
+    --status-confirmed: #2980B9;
+    --status-preparing: #F7B32B;
+    --status-ready: #27AE60;
+    --status-delivery: #8E44AD;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0ede5;
+    color: var(--deli-dark);
+    min-height: 100vh;
+}
+
+/* ── Login Screen ── */
+
+.login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.login-card {
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 var(--deli-dark);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--deli-red);
+    letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+}
+
+.login-card .subtitle {
+    color: var(--deli-brown);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+
+.pin-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    background: var(--deli-cream);
+}
+.pin-input:focus {
+    outline: none;
+    border-color: var(--deli-red);
+    background: white;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--deli-red);
+    color: white;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--deli-dark);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--deli-dark);
+}
+.login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 4px 4px 0 var(--deli-dark);
+}
+
+.login-error {
+    color: var(--deli-red);
+    font-weight: 600;
+    margin-top: 1rem;
+    display: none;
+}
+.login-error.visible { display: block; }
+
+/* ── Dashboard Layout ── */
+
+.dashboard { display: none; }
+.dashboard.visible { display: block; }
+
+.dash-header {
+    background: var(--deli-dark);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.dash-left { display: flex; align-items: center; gap: 1rem; }
+
+.dash-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--deli-cream);
+    letter-spacing: 2px;
+}
+.dash-title span { color: var(--deli-yellow); }
+
+.dash-status {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+}
+
+.dash-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.mute-btn {
+    background: none;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.7);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.mute-btn:hover { border-color: white; color: white; }
+.mute-btn.muted { background: var(--deli-red); border-color: var(--deli-red); color: white; }
+
+.dash-logout {
+    background: none;
+    border: 2px solid var(--deli-cream);
+    color: var(--deli-cream);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.dash-logout:hover { background: rgba(255,255,255,0.1); }
+
+/* ── Filter Tabs ── */
+
+.filter-bar {
+    display: flex;
+    gap: 0;
+    background: white;
+    border-bottom: 3px solid var(--deli-dark);
+    overflow-x: auto;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--deli-brown);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.filter-btn.active {
+    color: var(--deli-red);
+    border-bottom-color: var(--deli-red);
+}
+.filter-btn:hover:not(.active) {
+    color: var(--deli-dark);
+    background: var(--deli-cream);
+}
+
+.filter-count {
+    background: var(--deli-dark);
+    color: white;
+    font-size: 0.75rem;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4rem;
+}
+.filter-btn.active .filter-count {
+    background: var(--deli-red);
+}
+
+/* ── Orders Container ── */
+
+.orders-container {
+    padding: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.empty-orders {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--deli-brown);
+}
+.empty-orders h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem;
+    color: var(--deli-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* ── Order Card ── */
+
+.order-card {
+    background: white;
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--deli-dark);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-left: 6px solid var(--deli-brown);
+}
+
+.order-card[data-status="pending_payment"] { border-left-color: var(--status-pending); }
+.order-card[data-status="confirmed"] { border-left-color: var(--status-confirmed); }
+.order-card[data-status="preparing"] { border-left-color: var(--status-preparing); }
+.order-card[data-status="ready"] { border-left-color: var(--status-ready); }
+.order-card[data-status="out_for_delivery"] { border-left-color: var(--status-delivery); }
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #eee;
+}
+
+.order-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--deli-dark);
+}
+
+.order-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.15rem;
+}
+
+.order-type-badge {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.order-type-badge.pickup {
+    background: rgba(41, 128, 185, 0.15);
+    color: var(--status-confirmed);
+}
+.order-type-badge.delivery {
+    background: rgba(142, 68, 173, 0.15);
+    color: var(--status-delivery);
+}
+
+.order-time {
+    font-size: 0.8rem;
+    color: var(--deli-brown);
+}
+
+.order-status-badge {
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    color: white;
+}
+.order-status-badge.pending_payment { background: var(--status-pending); }
+.order-status-badge.confirmed { background: var(--status-confirmed); }
+.order-status-badge.preparing { background: var(--status-preparing); color: var(--deli-dark); }
+.order-status-badge.ready { background: var(--status-ready); }
+.order-status-badge.out_for_delivery { background: var(--status-delivery); }
+
+.order-body { padding: 1rem 1.25rem; }
+
+.order-customer {
+    margin-bottom: 0.75rem;
+}
+.customer-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+.customer-phone {
+    color: var(--deli-brown);
+    font-size: 0.9rem;
+}
+.customer-phone a {
+    color: var(--deli-brown);
+    text-decoration: none;
+}
+.customer-phone a:hover { text-decoration: underline; }
+
+.delivery-addr {
+    color: var(--status-delivery);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.15rem;
+}
+
+.order-items-list {
+    border-top: 1px solid #eee;
+    padding-top: 0.75rem;
+}
+
+.order-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+}
+.order-line-name { flex: 1; }
+.order-line-detail {
+    color: var(--deli-brown);
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+.order-line-qty {
+    color: var(--deli-brown);
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+.order-line-price {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.order-special-note {
+    background: var(--deli-cream);
+    border: 1px solid var(--deli-yellow);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: var(--deli-brown);
+}
+
+.order-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--deli-dark);
+}
+.order-total-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+}
+.order-total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--deli-red);
+}
+
+.order-scheduled-note {
+    background: rgba(41, 128, 185, 0.1);
+    border: 2px solid var(--status-confirmed);
+    border-radius: 6px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--status-confirmed);
+    margin-top: 0.75rem;
+}
+
+/* ── Order Actions ── */
+
+.order-actions {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 2px 2px 0 var(--deli-dark);
+    text-align: center;
+}
+.action-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--deli-dark);
+}
+.action-btn:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 var(--deli-dark);
+}
+.action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.action-btn.primary {
+    background: var(--deli-yellow);
+    color: var(--deli-dark);
+}
+.action-btn.success {
+    background: var(--status-ready);
+    color: white;
+    border-color: var(--status-ready);
+}
+.action-btn.complete {
+    background: var(--deli-dark);
+    color: white;
+}
+.action-btn.cancel {
+    background: white;
+    color: var(--deli-red);
+    border-color: var(--deli-red);
+    flex: 0;
+    min-width: 80px;
+}
+
+/* ── Confirm Modal (Prep Time) ── */
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26, 26, 26, 0.7);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.modal-overlay.visible { display: flex; }
+
+.modal {
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: 10px;
+    box-shadow: 6px 6px 0 var(--deli-dark);
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+}
+
+.modal-header {
+    padding: 1.5rem 1.5rem 0.5rem;
+}
+.modal-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.75rem;
+}
+.modal-header p {
+    color: var(--deli-brown);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.modal-body { padding: 1rem 1.5rem; }
+
+.prep-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.prep-btn {
+    padding: 1.25rem;
+    background: var(--deli-cream);
+    border: 2px solid var(--deli-dark);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.prep-btn:hover {
+    background: var(--deli-yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--deli-dark);
+}
+.prep-btn .prep-min {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--deli-dark);
+    display: block;
+}
+.prep-btn .prep-label {
+    font-size: 0.8rem;
+    color: var(--deli-brown);
+}
+
+.modal-footer {
+    padding: 0.75rem 1.5rem 1.25rem;
+}
+.modal-cancel {
+    background: none;
+    border: none;
+    color: var(--deli-brown);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.modal-cancel:hover { color: var(--deli-red); }
+
+/* ── Estimated Ready ── */
+
+.order-eta {
+    font-size: 0.85rem;
+    color: var(--status-preparing);
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* ── Toast ── */
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--deli-dark);
+    color: var(--deli-cream);
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 2000;
+    transition: transform 0.3s;
+    white-space: nowrap;
+}
+.toast.visible { transform: translateX(-50%) translateY(0); }
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+    .dash-header { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .dash-left { width: 100%; justify-content: space-between; }
+    .orders-container { padding: 0.75rem; }
+    .order-header { flex-direction: column; gap: 0.5rem; }
+    .order-actions { flex-direction: column; }
+    .action-btn { min-width: unset; }
+    .action-btn.cancel { flex: 1; }
+    .filter-bar { gap: 0; }
+    .filter-btn { padding: 0.6rem 0.75rem; font-size: 0.85rem; }
+}

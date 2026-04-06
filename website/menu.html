@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Quickstop Super Deli | Bellport, NY</title>
+    <meta name="description" content="Full menu for Quickstop Super Deli - breakfast sandwiches, cold cut heroes, hot sandwiches, chicken over rice, and more. Bellport, NY.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deli-red: #D62828;
+            --deli-yellow: #F7B32B;
+            --deli-cream: #FFF8E7;
+            --deli-dark: #1A1A1A;
+            --deli-brown: #5C4033;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--deli-cream);
+            color: var(--deli-dark);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 248, 231, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--deli-dark);
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-red);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo-text span {
+            color: var(--deli-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deli-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--deli-red);
+        }
+
+        .order-btn {
+            background: var(--deli-red);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+            box-shadow: 4px 4px 0 var(--deli-dark);
+        }
+
+        .order-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: var(--deli-red);
+            position: relative;
+        }
+
+        .page-header::before {
+            content: 'MENU';
+            position: absolute;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 15rem;
+            color: rgba(0,0,0,0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            color: var(--deli-cream);
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header p {
+            color: rgba(255, 248, 231, 0.8);
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Menu Content */
+        .menu-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .menu-category {
+            margin-bottom: 4rem;
+        }
+
+        .menu-category h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--deli-dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 4px solid var(--deli-yellow);
+            display: inline-block;
+        }
+
+        .menu-items {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1rem;
+            background: white;
+            border: 2px solid var(--deli-dark);
+            border-radius: 4px;
+            box-shadow: 3px 3px 0 var(--deli-dark);
+        }
+
+        .menu-item-info h3 {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .menu-item-info p {
+            color: var(--deli-brown);
+            font-size: 0.9rem;
+        }
+
+        .menu-item-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-red);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        /* Menu Grid for beverages */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .menu-grid .menu-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .menu-grid .menu-item-info {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-grid .menu-item-price {
+            margin-left: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--deli-dark);
+            border-top: 4px solid var(--deli-yellow);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo-img {
+            height: 150px;
+            width: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        footer p {
+            color: rgba(255, 248, 231, 0.6);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--deli-yellow);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .menu-note {
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            border: 2px solid var(--deli-dark);
+        }
+
+        /* Clickable Menu Items */
+        .menu-item {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .menu-item:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--deli-dark);
+        }
+
+        .menu-item:active {
+            transform: translate(0, 0);
+            box-shadow: 3px 3px 0 var(--deli-dark);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 26, 0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border: 3px solid var(--deli-dark);
+            border-radius: 8px;
+            box-shadow: 8px 8px 0 var(--deli-dark);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--deli-dark);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            background: var(--deli-cream);
+            border: 2px solid var(--deli-dark);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--deli-red);
+            color: white;
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--deli-dark);
+            padding-right: 40px;
+        }
+
+        .modal-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-red);
+            margin-top: 0.25rem;
+        }
+
+        .modal-description {
+            color: var(--deli-brown);
+            margin-top: 0.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .customize-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .customize-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .customize-title {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .customize-required {
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .customize-subtitle {
+            font-size: 0.85rem;
+            color: var(--deli-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--deli-cream);
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            border-color: var(--deli-brown);
+        }
+
+        .option-item.selected {
+            border-color: var(--deli-red);
+            background: rgba(214, 40, 40, 0.1);
+        }
+
+        .option-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--deli-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-item.selected .option-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--deli-red);
+            border-radius: 50%;
+        }
+
+        .option-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--deli-dark);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-item.selected .option-checkbox::after {
+            content: '✓';
+            color: var(--deli-red);
+            font-weight: bold;
+        }
+
+        .option-label {
+            font-weight: 500;
+        }
+
+        .option-price {
+            color: var(--deli-brown);
+            font-size: 0.9rem;
+        }
+
+        /* Special Instructions */
+        .special-instructions {
+            margin-top: 1.5rem;
+        }
+
+        .special-instructions label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .special-instructions textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--deli-dark);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .special-instructions textarea:focus {
+            outline: none;
+            border-color: var(--deli-red);
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 2px solid var(--deli-dark);
+            position: sticky;
+            bottom: 0;
+            background: white;
+        }
+
+        .add-to-order-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            border: 2px solid var(--deli-dark);
+            border-radius: 6px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 4px 4px 0 var(--deli-dark);
+            transition: all 0.2s;
+        }
+
+        .add-to-order-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        .add-to-order-btn:active {
+            transform: translate(0, 0);
+            box-shadow: 4px 4px 0 var(--deli-dark);
+        }
+
+        /* Non-customizable items */
+        .menu-item.no-customize {
+            cursor: default;
+        }
+
+        .menu-item.no-customize:hover {
+            transform: none;
+            box-shadow: 3px 3px 0 var(--deli-dark);
+        }
+
+        /* ── Cart FAB (Floating Action Button) ── */
+        .cart-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 500;
+            background: var(--deli-red);
+            color: white;
+            border: 3px solid var(--deli-dark);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--deli-dark);
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 1.5rem;
+        }
+
+        .cart-fab:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        .cart-fab:active {
+            transform: translate(0, 0);
+            box-shadow: 4px 4px 0 var(--deli-dark);
+        }
+
+        .cart-fab .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--deli-dark);
+            font-weight: 700;
+        }
+
+        .cart-fab.empty {
+            display: none;
+        }
+
+        /* ── Cart Drawer ── */
+        .cart-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 26, 0.6);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .cart-drawer-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 380px;
+            max-width: 90vw;
+            background: var(--deli-cream);
+            z-index: 1600;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-left: 3px solid var(--deli-dark);
+        }
+
+        .cart-drawer.open {
+            transform: translateX(0);
+        }
+
+        .cart-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 3px solid var(--deli-dark);
+            background: white;
+        }
+
+        .cart-drawer-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.75rem;
+            color: var(--deli-dark);
+        }
+
+        .cart-drawer-close {
+            width: 36px;
+            height: 36px;
+            background: var(--deli-cream);
+            border: 2px solid var(--deli-dark);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .cart-drawer-close:hover {
+            background: var(--deli-red);
+            color: white;
+        }
+
+        .cart-drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .cart-empty-msg {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--deli-brown);
+        }
+
+        .cart-empty-msg h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item {
+            background: white;
+            border: 2px solid var(--deli-dark);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 2px 2px 0 var(--deli-dark);
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .cart-item-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: var(--deli-red);
+            white-space: nowrap;
+            margin-left: 0.5rem;
+        }
+
+        .cart-item-details {
+            font-size: 0.8rem;
+            color: var(--deli-brown);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--deli-dark);
+            border-radius: 4px;
+            background: var(--deli-cream);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .cart-qty-btn:hover {
+            background: var(--deli-yellow);
+        }
+
+        .cart-qty-value {
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .cart-item-edit {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--deli-brown);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .cart-item-edit:hover {
+            text-decoration: underline;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--deli-red);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .cart-item-remove:hover {
+            text-decoration: underline;
+        }
+
+        .cart-drawer-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 3px solid var(--deli-dark);
+            background: white;
+        }
+
+        .cart-subtotal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .cart-subtotal-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .cart-subtotal-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--deli-red);
+        }
+
+        .cart-checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--deli-yellow);
+            color: var(--deli-dark);
+            border: 2px solid var(--deli-dark);
+            border-radius: 6px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--deli-dark);
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .cart-checkout-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--deli-dark);
+        }
+
+        .cart-checkout-btn:active {
+            transform: translate(0, 0);
+            box-shadow: 4px 4px 0 var(--deli-dark);
+        }
+
+        .cart-clear-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--deli-brown);
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .cart-clear-btn:hover {
+            color: var(--deli-red);
+            text-decoration: underline;
+        }
+
+        /* ── Added-to-cart toast ── */
+        .cart-toast {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            background: var(--deli-dark);
+            color: var(--deli-cream);
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 2000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .cart-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 3rem;
+            }
+
+            .page-header::before {
+                font-size: 8rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cart-fab {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 56px;
+                height: 56px;
+                font-size: 1.25rem;
+            }
+
+            .cart-drawer {
+                width: 100vw;
+                max-width: 100vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo-text">QUICKSTOP <span>SUPER DELI</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/menu.html">Menu</a>
+            <a href="/#location">Location</a>
+            <a href="/menu.html" class="order-btn">Order Now</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Our Menu</h1>
+        <p>Fresh made daily - Classic New York deli favorites</p>
+    </div>
+
+    <!-- Menu Content -->
+    <div class="menu-content">
+
+        <p class="menu-note">Prices may vary. Items with two prices show Roll / Hero pricing. Call ahead for large orders: <a href="tel:+16312861491" style="color: var(--deli-dark);">(631) 286-1491</a></p>
+
+        <!-- Breakfast Sandwiches -->
+        <div class="menu-category">
+            <h2>Breakfast Sandwiches</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bacon, Egg & Cheese</h3>
+                        <p>Crispy bacon with eggs and American cheese</p>
+                    </div>
+                    <div class="menu-item-price">$6.00 / $11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Sausage, Egg & Cheese</h3>
+                        <p>Pork sausage patty with eggs and cheese</p>
+                    </div>
+                    <div class="menu-item-price">$6.00 / $11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Ham, Egg & Cheese</h3>
+                        <p>Sliced ham with eggs and cheese</p>
+                    </div>
+                    <div class="menu-item-price">$6.00 / $11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Steak, Egg & Cheese</h3>
+                        <p>Chopped steak with eggs and melted cheese</p>
+                    </div>
+                    <div class="menu-item-price">$10.00 / $12.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bacon, Egg, Cheese & Avocado</h3>
+                        <p>Bacon with fresh avocado on a roll or hero</p>
+                    </div>
+                    <div class="menu-item-price">$8.00 / $12.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>The Hungry Man</h3>
+                        <p>3 eggs with ham, bacon, sausage and cheese on a roll or hero</p>
+                    </div>
+                    <div class="menu-item-price">$10.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Turkey Bacon or Turkey Sausage, Egg & Cheese</h3>
+                        <p>Turkey bacon or sausage, eggs, cheese on a roll or hero</p>
+                    </div>
+                    <div class="menu-item-price">$7.00 / $11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Western Omelette Platter</h3>
+                        <p>Omelette with peppers, onions, ham, served with toast and home fries</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Mini Sandwich</h3>
+                        <p>Five mini sandwiches with one egg, cheese, bacon or sausage or ham</p>
+                    </div>
+                    <div class="menu-item-price">$6.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Mini Cheeseburger</h3>
+                        <p>Five mini burgers with lettuce, tomato, onion, cheese</p>
+                    </div>
+                    <div class="menu-item-price">$6.75</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breakfast Platters -->
+        <div class="menu-category">
+            <h2>Breakfast Platters</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Ham Platter</h3>
+                        <p>Ham, two eggs, home fries, cheese, white or wheat bread with butter</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bacon Platter</h3>
+                        <p>Bacon, two eggs, home fries, cheese, white or wheat bread with butter</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Sausage Platter</h3>
+                        <p>Sausage, two eggs, home fries, cheese, white or wheat bread with butter</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Pancake Platter</h3>
+                        <p>Three pancakes, two eggs, home fries, sausage or bacon, two syrup</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Mini Pancake Platter</h3>
+                        <p>Five mini pancakes, two eggs, home fries, bacon or sausage, two syrup, strawberry or blueberry</p>
+                    </div>
+                    <div class="menu-item-price">$10.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>French Toast Platter</h3>
+                        <p>Four French toast, two eggs, home fries, bacon or sausage, two syrup</p>
+                    </div>
+                    <div class="menu-item-price">$14.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cold Heroes & Sandwiches -->
+        <div class="menu-category">
+            <h2>Cold Heroes & Sandwiches</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Italian Hero</h3>
+                        <p>Genoa salami, pepperoni, ham, capicola, provolone, lettuce, tomato, oil & vinegar</p>
+                    </div>
+                    <div class="menu-item-price">$10.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Turkey Club</h3>
+                        <p>Sliced turkey, American cheese, lettuce, tomato, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Roast Beef Club</h3>
+                        <p>Roast beef, American cheese, lettuce, tomato</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Ham & Cheese</h3>
+                        <p>Sliced ham with your choice of cheese and toppings</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Turkey Sandwich</h3>
+                        <p>Sliced turkey breast with your choice of cheese and toppings</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Tuna Salad Sandwich</h3>
+                        <p>Homemade tuna salad with lettuce and tomato</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Honey Turkey Club</h3>
+                        <p>Sliced honey turkey, American cheese, lettuce, tomato, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Pastrami Sandwich</h3>
+                        <p>Sliced pastrami, American cheese, lettuce, tomato, onions, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Salami Sandwich</h3>
+                        <p>Sliced salami, American cheese, lettuce, tomato, onions, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hot Sandwiches -->
+        <div class="menu-category">
+            <h2>Hot Sandwiches & Heroes</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Cutlet Hero</h3>
+                        <p>Breaded chicken cutlet with American cheese, lettuce, tomato, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Parm Hero</h3>
+                        <p>Chicken cutlet with marinara, Parmesan, melted mozzarella</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Philly Cheesesteak</h3>
+                        <p>Chopped steak with melted cheese, sautéed peppers & onions</p>
+                    </div>
+                    <div class="menu-item-price">$10.25 / $14.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>The Reuben</h3>
+                        <p>Hot pastrami or corned beef, sauerkraut, Swiss, Russian dressing on rye</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>New York Style Chop Cheese</h3>
+                        <p>Chopped steak, green pepper, lettuce, tomato, onions, and melted cheese</p>
+                    </div>
+                    <div class="menu-item-price">$10.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>BLT</h3>
+                        <p>Crispy bacon, lettuce, tomato, mayo, ketchup</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Hot Roast Beef & Gravy</h3>
+                        <p>Hot roast beef with gravy, melted mozzarella</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Eggplant Parm Hero</h3>
+                        <p>Fried eggplant with marinara, Parmesan, melted mozzarella</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Meatball Parm Hero</h3>
+                        <p>Homemade meatballs with marinara and melted mozzarella</p>
+                    </div>
+                    <div class="menu-item-price">$9.00 / $13.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Grilled Cheese</h3>
+                        <p>Classic grilled cheese on white or wheat bread</p>
+                    </div>
+                    <div class="menu-item-price">$4.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chicken Over Rice -->
+        <div class="menu-category">
+            <h2>Chicken Over Rice</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Over Rice</h3>
+                        <p>Grilled chicken over yellow rice with white sauce and hot sauce</p>
+                    </div>
+                    <div class="menu-item-price">$11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Lamb Over Rice</h3>
+                        <p>Seasoned lamb over yellow rice with white sauce and hot sauce</p>
+                    </div>
+                    <div class="menu-item-price">$11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Combo Over Rice</h3>
+                        <p>Chicken and lamb over yellow rice with all the sauces</p>
+                    </div>
+                    <div class="menu-item-price">$11.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Teriyaki Platter</h3>
+                        <p>Pulled teriyaki chicken with lettuce, tomato, red onion over rice</p>
+                    </div>
+                    <div class="menu-item-price">$11.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wraps -->
+        <div class="menu-category">
+            <h2>Wraps</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Caesar Wrap</h3>
+                        <p>Grilled chicken, romaine, Parmesan, croutons, Caesar dressing</p>
+                    </div>
+                    <div class="menu-item-price">$9.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Buffalo Chicken Wrap</h3>
+                        <p>Crispy Buffalo chicken, lettuce, tomato, blue cheese dressing</p>
+                    </div>
+                    <div class="menu-item-price">$9.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Turkey BLT Wrap</h3>
+                        <p>Sliced turkey, bacon, lettuce, tomato, mayo</p>
+                    </div>
+                    <div class="menu-item-price">$9.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Southwest Wrap</h3>
+                        <p>Grilled chicken, black beans, cheddar, corn, avocado, chipotle dressing</p>
+                    </div>
+                    <div class="menu-item-price">$9.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Grilled Veggie Wrap</h3>
+                        <p>Grilled vegetables, spring mix, olive oil, balsamic</p>
+                    </div>
+                    <div class="menu-item-price">$9.25</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Burgers & Hot Dogs -->
+        <div class="menu-category">
+            <h2>Burgers & Hot Dogs</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Cheeseburger</h3>
+                        <p>Quarter pound beef patty with American cheese</p>
+                    </div>
+                    <div class="menu-item-price">$7.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bacon Cheeseburger</h3>
+                        <p>Beef patty with bacon, American cheese, lettuce, tomato</p>
+                    </div>
+                    <div class="menu-item-price">$9.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Hot Dog</h3>
+                        <p>Classic hot dog with your choice of toppings</p>
+                    </div>
+                    <div class="menu-item-price">$2.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>2 Hot Dogs & Fries Combo</h3>
+                        <p>Two hot dogs with fries and a free soda</p>
+                    </div>
+                    <div class="menu-item-price">$8.75</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salads -->
+        <div class="menu-category">
+            <h2>Salads</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Grilled Chicken Salad</h3>
+                        <p>Grilled chicken over mixed greens with tomato, cucumber, egg</p>
+                    </div>
+                    <div class="menu-item-price">$9.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Caesar Salad</h3>
+                        <p>Grilled chicken, romaine, Parmesan, croutons, Caesar dressing</p>
+                    </div>
+                    <div class="menu-item-price">$9.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chef Salad</h3>
+                        <p>Ham, turkey, Swiss, egg, tomato, cucumber over mixed greens</p>
+                    </div>
+                    <div class="menu-item-price">$9.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Greek Salad</h3>
+                        <p>Lettuce, tomato, cucumber, peppers, olives, feta cheese</p>
+                    </div>
+                    <div class="menu-item-price">$9.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Garden Salad</h3>
+                        <p>Mixed greens with tomato, cucumber, carrots, your choice of dressing</p>
+                    </div>
+                    <div class="menu-item-price">$7.99</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sides -->
+        <div class="menu-category">
+            <h2>Sides</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>French Fries</h3>
+                        <p>Crispy golden fries</p>
+                    </div>
+                    <div class="menu-item-price">$3.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Onion Rings</h3>
+                        <p>Crispy battered onion rings</p>
+                    </div>
+                    <div class="menu-item-price">$3.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Wings</h3>
+                        <p>With blue cheese dressing</p>
+                    </div>
+                    <div class="menu-item-price">$6.99</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Homefries</h3>
+                        <p>Seasoned breakfast potatoes</p>
+                    </div>
+                    <div class="menu-item-price">$4.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coffee & Hot Beverages -->
+        <div class="menu-category">
+            <h2>Coffee & Hot Drinks</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Regular Coffee</h3>
+                        <p>Hot brewed coffee — S $1.50 / M $2.50 / L $2.99</p>
+                    </div>
+                    <div class="menu-item-price">$1.50+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Iced Coffee</h3>
+                        <p>Fresh iced coffee — S $3.99 / M $4.49 / L $4.99</p>
+                    </div>
+                    <div class="menu-item-price">$3.99+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Hot Chocolate</h3>
+                        <p>Rich hot chocolate — S $1.85 / M $2.35 / L $2.85</p>
+                    </div>
+                    <div class="menu-item-price">$1.85+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Cappuccino</h3>
+                        <p>French Vanilla, Caramel, or Regular — S $1.85 / M $2.35 / L $2.85</p>
+                    </div>
+                    <div class="menu-item-price">$1.85+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cold Beverages -->
+        <div class="menu-category">
+            <h2>Cold Beverages</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>20 oz Soda</h3>
+                        <p>Coke, Pepsi, Sprite, and more</p>
+                    </div>
+                    <div class="menu-item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Gatorade</h3>
+                        <p>20 oz bottle, various flavors</p>
+                    </div>
+                    <div class="menu-item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Snapple / Arizona</h3>
+                        <p>Assorted flavors</p>
+                    </div>
+                    <div class="menu-item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Red Bull / Monster</h3>
+                        <p>Energy drinks</p>
+                    </div>
+                    <div class="menu-item-price">$3.25</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bottled Water</h3>
+                        <p>Poland Spring</p>
+                    </div>
+                    <div class="menu-item-price">$1.75</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beer & Alcohol -->
+        <div class="menu-category">
+            <h2>Beer & Seltzers</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Corona Extra</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Modelo Especial</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Heineken</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Coors Light</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Miller Lite</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Budweiser</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Bud Light</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Blue Moon</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Guinness</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Samuel Adams</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Yuengling</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Pacifico</h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>White Claw</h3>
+                        <p>Hard Seltzer</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Truly</h3>
+                        <p>Hard Seltzer</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Angry Orchard</h3>
+                        <p>Hard Cider</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Mike's Hard</h3>
+                        <p>Lemonade</p>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; color: var(--deli-brown); font-size: 0.9rem;">* Beer prices vary. Must be 21+ with valid ID.</p>
+        </div>
+
+        <!-- Lunch Menu -->
+        <div class="menu-category">
+            <h2>Lunch Menu</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Roast Beef</h3>
+                        <p>Served with rice, beans, salad — S $10 / M $12 / L $14</p>
+                    </div>
+                    <div class="menu-item-price">$10.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Grilled Chicken Breast</h3>
+                        <p>Served with rice, beans, salad — S $10 / M $12 / L $14</p>
+                    </div>
+                    <div class="menu-item-price">$10.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Pasta with Shrimp</h3>
+                        <p>Served with rice, beans, salad — S $10 / M $12 / L $14</p>
+                    </div>
+                    <div class="menu-item-price">$10.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Beef Fajita</h3>
+                        <p>Served with rice, beans, salad — S $10 / M $12 / L $14</p>
+                    </div>
+                    <div class="menu-item-price">$10.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Salmon</h3>
+                        <p>Served with rice, beans, salad — S $12 / M $14 / L $16</p>
+                    </div>
+                    <div class="menu-item-price">$12.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chicken Soup</h3>
+                        <p>Served with rice, 2 tortillas — M $14 / L $18</p>
+                    </div>
+                    <div class="menu-item-price">$14.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Beef Soup</h3>
+                        <p>Served with rice, 2 tortillas — M $14 / L $18</p>
+                    </div>
+                    <div class="menu-item-price">$14.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Pupusas Revueltas</h3>
+                        <p>Traditional stuffed pupusa</p>
+                    </div>
+                    <div class="menu-item-price">$3.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Loroco Queso Pupusa</h3>
+                        <p>Pupusa with loroco and cheese</p>
+                    </div>
+                    <div class="menu-item-price">$3.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Frijol Queso Pupusa</h3>
+                        <p>Pupusa with beans and cheese</p>
+                    </div>
+                    <div class="menu-item-price">$3.00</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Queso Pupusa</h3>
+                        <p>Cheese pupusa</p>
+                    </div>
+                    <div class="menu-item-price">$2.50</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Fried Plantains</h3>
+                        <p>S $3 / M $5 / L $7</p>
+                    </div>
+                    <div class="menu-item-price">$3.00+</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Snacks & Grocery -->
+        <div class="menu-category">
+            <h2>Snacks & Grocery</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Chips</h3>
+                        <p>Lay's, Doritos, Wise, and more</p>
+                    </div>
+                    <div class="menu-item-price">$1.25+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Candy Bars</h3>
+                        <p>Snickers, M&M's, Reese's, Kit Kat, and more</p>
+                    </div>
+                    <div class="menu-item-price">$1.75</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Fresh Fruit</h3>
+                        <p>Bananas, apples, and seasonal fruit</p>
+                    </div>
+                    <div class="menu-item-price">$1.00+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Milk</h3>
+                        <p>Whole, 2%, skim - various sizes</p>
+                    </div>
+                    <div class="menu-item-price">$2.25+</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h3>Cigarettes & Tobacco</h3>
+                        <p>Various brands available</p>
+                    </div>
+                    <div class="menu-item-price">Ask</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <img src="logo.png" alt="Quickstop Super Deli" class="footer-logo-img">
+        <p>461 Station Rd, Bellport, NY 11713 · <a href="tel:+16312861491">(631) 286-1491</a></p>
+        <p style="margin-top: 0.5rem;"><a href="/">Home</a> · <a href="/menu.html">Menu</a> · <a href="https://www.doordash.com/convenience/store/quick-stop-super-deli-bellport-36500379/" target="_blank">Order on DoorDash</a></p>
+        <p style="margin-top: 1rem;">© 2025 Quickstop Super Deli. Bellport, Long Island, NY.</p>
+    </footer>
+
+    <!-- Cart FAB -->
+    <div class="cart-fab empty" id="cartFab" onclick="toggleCartDrawer()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </div>
+
+    <!-- Cart Toast -->
+    <div class="cart-toast" id="cartToast">Added to cart!</div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-drawer-header">
+            <span class="cart-drawer-title">Your Order</span>
+            <button class="cart-drawer-close" onclick="closeCartDrawer()">&times;</button>
+        </div>
+        <div class="cart-drawer-body" id="cartDrawerBody">
+            <!-- Populated by JS -->
+        </div>
+        <div class="cart-drawer-footer" id="cartDrawerFooter">
+            <div class="cart-subtotal">
+                <span class="cart-subtotal-label">Subtotal</span>
+                <span class="cart-subtotal-value" id="cartSubtotal">$0.00</span>
+            </div>
+            <a href="/order.html" class="cart-checkout-btn" id="cartCheckoutBtn">Checkout</a>
+            <button class="cart-clear-btn" onclick="clearCart()">Clear Cart</button>
+        </div>
+    </div>
+
+    <!-- Customization Modal -->
+    <div class="modal-overlay" id="customizeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+                <h2 class="modal-title" id="modalTitle">Item Name</h2>
+                <div class="modal-price" id="modalPrice">$0.00</div>
+                <p class="modal-description" id="modalDescription">Item description</p>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Customization options will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="add-to-order-btn" onclick="addToOrder()">
+                    <span>Add to Order</span>
+                    <span id="modalTotal">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/cart.js"></script>
+    <script>
+        // Customization definitions for different item types
+        const customizations = {
+            // BREAKFAST SANDWICHES
+            breakfast: {
+                bread: {
+                    title: 'Bread Choice',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Roll', price: 0 },
+                        { name: 'Bagel', price: 0.50 },
+                        { name: 'Hero', price: 0 },
+                        { name: 'Croissant', price: 1.00 },
+                        { name: 'English Muffin', price: 0 },
+                        { name: 'Wrap', price: 0.50 }
+                    ]
+                },
+                toast: {
+                    title: 'Toast Options',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Toasted', price: 0 },
+                        { name: 'Not Toasted', price: 0 },
+                        { name: 'Lightly Toasted', price: 0 },
+                        { name: 'Extra Toasted', price: 0 }
+                    ]
+                },
+                egg: {
+                    title: 'Egg Style',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Scrambled', price: 0 },
+                        { name: 'Fried', price: 0 },
+                        { name: 'Over Easy', price: 0 },
+                        { name: 'Over Hard', price: 0 }
+                    ]
+                },
+                cheese: {
+                    title: 'Cheese',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'American', price: 0 },
+                        { name: 'Swiss', price: 0 },
+                        { name: 'Cheddar', price: 0 },
+                        { name: 'Provolone', price: 0 },
+                        { name: 'Pepper Jack', price: 0 },
+                        { name: 'Mozzarella', price: 0 },
+                        { name: 'No Cheese', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Egg', price: 1.50 },
+                        { name: 'Extra Bacon', price: 2.00 },
+                        { name: 'Extra Cheese', price: 1.00 },
+                        { name: 'Avocado', price: 2.00 },
+                        { name: 'Lettuce', price: 0.50 },
+                        { name: 'Tomato', price: 0.50 },
+                        { name: 'Onion', price: 0.50 },
+                        { name: 'Peppers', price: 0.50 },
+                        { name: 'Jalapeños', price: 0.50 },
+                        { name: 'Hot Sauce', price: 0 }
+                    ]
+                }
+            },
+
+            // COLD HEROES & SANDWICHES
+            coldHero: {
+                bread: {
+                    title: 'Bread Choice',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Roll', price: 0 },
+                        { name: 'Hero', price: 0 },
+                        { name: 'White Bread', price: 0 },
+                        { name: 'Wheat Bread', price: 0 },
+                        { name: 'Rye Bread', price: 0 },
+                        { name: 'Wrap', price: 0.50 }
+                    ]
+                },
+                toast: {
+                    title: 'Toast Options',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Not Toasted', price: 0 },
+                        { name: 'Toasted', price: 0 },
+                        { name: 'Lightly Toasted', price: 0 }
+                    ]
+                },
+                cheese: {
+                    title: 'Cheese',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'American', price: 0 },
+                        { name: 'Swiss', price: 0 },
+                        { name: 'Provolone', price: 0 },
+                        { name: 'Cheddar', price: 0 },
+                        { name: 'Pepper Jack', price: 0 },
+                        { name: 'Mozzarella', price: 0 },
+                        { name: 'No Cheese', price: 0 }
+                    ]
+                },
+                veggies: {
+                    title: 'Vegetables',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Lettuce', price: 0 },
+                        { name: 'Tomato', price: 0 },
+                        { name: 'Onion', price: 0 },
+                        { name: 'Pickles', price: 0 },
+                        { name: 'Hot Peppers', price: 0 },
+                        { name: 'Sweet Peppers', price: 0 },
+                        { name: 'Olives', price: 0 },
+                        { name: 'Cucumber', price: 0 }
+                    ]
+                },
+                condiments: {
+                    title: 'Condiments',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Mayo', price: 0 },
+                        { name: 'Mustard', price: 0 },
+                        { name: 'Oil & Vinegar', price: 0 },
+                        { name: 'Ranch', price: 0 },
+                        { name: 'Honey Mustard', price: 0 },
+                        { name: 'Chipotle Mayo', price: 0 },
+                        { name: 'Hot Sauce', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Meat', price: 2.50 },
+                        { name: 'Extra Cheese', price: 1.00 },
+                        { name: 'Bacon', price: 2.00 },
+                        { name: 'Avocado', price: 2.00 }
+                    ]
+                }
+            },
+
+            // HOT SANDWICHES
+            hotSandwich: {
+                bread: {
+                    title: 'Bread Choice',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Roll', price: 0 },
+                        { name: 'Hero', price: 0 },
+                        { name: 'Garlic Hero', price: 0 },
+                        { name: 'Wrap', price: 0.50 }
+                    ]
+                },
+                cheese: {
+                    title: 'Cheese',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'American', price: 0 },
+                        { name: 'Mozzarella', price: 0 },
+                        { name: 'Swiss', price: 0 },
+                        { name: 'Provolone', price: 0 },
+                        { name: 'Cheddar', price: 0 },
+                        { name: 'Pepper Jack', price: 0 },
+                        { name: 'No Cheese', price: 0 }
+                    ]
+                },
+                veggies: {
+                    title: 'Toppings',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Lettuce', price: 0 },
+                        { name: 'Tomato', price: 0 },
+                        { name: 'Onion', price: 0 },
+                        { name: 'Sautéed Peppers', price: 0.75 },
+                        { name: 'Sautéed Onions', price: 0.75 },
+                        { name: 'Mushrooms', price: 0.75 },
+                        { name: 'Jalapeños', price: 0.50 }
+                    ]
+                },
+                condiments: {
+                    title: 'Condiments',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Mayo', price: 0 },
+                        { name: 'Mustard', price: 0 },
+                        { name: 'Ketchup', price: 0 },
+                        { name: 'Hot Sauce', price: 0 },
+                        { name: 'BBQ Sauce', price: 0 },
+                        { name: 'Ranch', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Meat', price: 2.50 },
+                        { name: 'Extra Cheese', price: 1.00 },
+                        { name: 'Bacon', price: 2.00 },
+                        { name: 'Fried Egg', price: 1.50 }
+                    ]
+                }
+            },
+
+            // CHICKEN OVER RICE
+            chickenRice: {
+                protein: {
+                    title: 'Protein Style',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Regular', price: 0 },
+                        { name: 'Extra Chicken', price: 2.00 },
+                        { name: 'Extra Lamb', price: 3.00 }
+                    ]
+                },
+                sauce: {
+                    title: 'Sauce',
+                    required: true,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'White Sauce', price: 0 },
+                        { name: 'Hot Sauce', price: 0 },
+                        { name: 'BBQ Sauce', price: 0 },
+                        { name: 'No Sauce', price: 0 }
+                    ]
+                },
+                sauceLevel: {
+                    title: 'Hot Sauce Level',
+                    required: false,
+                    type: 'radio',
+                    options: [
+                        { name: 'Mild', price: 0 },
+                        { name: 'Medium', price: 0 },
+                        { name: 'Hot', price: 0 },
+                        { name: 'Extra Hot', price: 0 }
+                    ]
+                },
+                toppings: {
+                    title: 'Toppings',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Lettuce', price: 0 },
+                        { name: 'Tomato', price: 0 },
+                        { name: 'Onion', price: 0 },
+                        { name: 'Extra Rice', price: 1.00 },
+                        { name: 'Extra Lettuce', price: 0.50 }
+                    ]
+                }
+            },
+
+            // WRAPS
+            wrap: {
+                wrapType: {
+                    title: 'Wrap Type',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Plain Wrap', price: 0 },
+                        { name: 'Wheat Wrap', price: 0 },
+                        { name: 'Spinach Wrap', price: 0.50 },
+                        { name: 'Tomato Basil Wrap', price: 0.50 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Chicken', price: 2.50 },
+                        { name: 'Extra Cheese', price: 1.00 },
+                        { name: 'Bacon', price: 2.00 },
+                        { name: 'Avocado', price: 2.00 },
+                        { name: 'Extra Dressing', price: 0.50 }
+                    ]
+                }
+            },
+
+            // BURGERS
+            burger: {
+                doneness: {
+                    title: 'How would you like it cooked?',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Well Done', price: 0 },
+                        { name: 'Medium Well', price: 0 },
+                        { name: 'Medium', price: 0 }
+                    ]
+                },
+                cheese: {
+                    title: 'Cheese',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'American', price: 0 },
+                        { name: 'Swiss', price: 0 },
+                        { name: 'Cheddar', price: 0 },
+                        { name: 'Pepper Jack', price: 0 },
+                        { name: 'No Cheese', price: 0 }
+                    ]
+                },
+                toppings: {
+                    title: 'Toppings',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Lettuce', price: 0 },
+                        { name: 'Tomato', price: 0 },
+                        { name: 'Onion', price: 0 },
+                        { name: 'Pickles', price: 0 },
+                        { name: 'Jalapeños', price: 0.50 },
+                        { name: 'Sautéed Mushrooms', price: 0.75 },
+                        { name: 'Sautéed Onions', price: 0.75 }
+                    ]
+                },
+                condiments: {
+                    title: 'Condiments',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Ketchup', price: 0 },
+                        { name: 'Mustard', price: 0 },
+                        { name: 'Mayo', price: 0 },
+                        { name: 'BBQ Sauce', price: 0 },
+                        { name: 'Hot Sauce', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Patty', price: 3.00 },
+                        { name: 'Bacon', price: 2.00 },
+                        { name: 'Fried Egg', price: 1.50 },
+                        { name: 'Avocado', price: 2.00 }
+                    ]
+                }
+            },
+
+            // HOT DOG
+            hotdog: {
+                toppings: {
+                    title: 'Toppings',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Ketchup', price: 0 },
+                        { name: 'Mustard', price: 0 },
+                        { name: 'Relish', price: 0 },
+                        { name: 'Onions', price: 0 },
+                        { name: 'Sauerkraut', price: 0.50 },
+                        { name: 'Chili', price: 1.00 },
+                        { name: 'Cheese', price: 0.75 }
+                    ]
+                }
+            },
+
+            // SALADS
+            salad: {
+                protein: {
+                    title: 'Add Protein',
+                    required: false,
+                    type: 'radio',
+                    options: [
+                        { name: 'No Extra Protein', price: 0 },
+                        { name: 'Grilled Chicken', price: 3.00 },
+                        { name: 'Crispy Chicken', price: 3.00 },
+                        { name: 'Tuna Salad', price: 2.50 },
+                        { name: 'Shrimp', price: 4.00 }
+                    ]
+                },
+                dressing: {
+                    title: 'Dressing',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Ranch', price: 0 },
+                        { name: 'Caesar', price: 0 },
+                        { name: 'Italian', price: 0 },
+                        { name: 'Blue Cheese', price: 0 },
+                        { name: 'Balsamic Vinaigrette', price: 0 },
+                        { name: 'Oil & Vinegar', price: 0 },
+                        { name: 'Honey Mustard', price: 0 },
+                        { name: 'No Dressing', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Cheese', price: 1.00 },
+                        { name: 'Avocado', price: 2.00 },
+                        { name: 'Bacon Bits', price: 1.50 },
+                        { name: 'Croutons', price: 0.50 }
+                    ]
+                }
+            },
+
+            // SIDES
+            sides: {
+                size: {
+                    title: 'Size',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Regular', price: 0 },
+                        { name: 'Large', price: 1.50 }
+                    ]
+                },
+                sauces: {
+                    title: 'Dipping Sauce',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Ketchup', price: 0 },
+                        { name: 'Ranch', price: 0.50 },
+                        { name: 'Blue Cheese', price: 0.50 },
+                        { name: 'BBQ Sauce', price: 0.50 },
+                        { name: 'Honey Mustard', price: 0.50 }
+                    ]
+                }
+            },
+
+            // WINGS
+            wings: {
+                style: {
+                    title: 'Wing Style',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Plain', price: 0 },
+                        { name: 'Buffalo Mild', price: 0 },
+                        { name: 'Buffalo Medium', price: 0 },
+                        { name: 'Buffalo Hot', price: 0 },
+                        { name: 'BBQ', price: 0 },
+                        { name: 'Garlic Parmesan', price: 0 },
+                        { name: 'Honey BBQ', price: 0 }
+                    ]
+                },
+                sauce: {
+                    title: 'Dipping Sauce',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Blue Cheese', price: 0 },
+                        { name: 'Ranch', price: 0 },
+                        { name: 'Extra Blue Cheese', price: 0.75 },
+                        { name: 'Extra Ranch', price: 0.75 }
+                    ]
+                }
+            },
+
+            // COFFEE
+            coffee: {
+                size: {
+                    title: 'Size',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'Small', price: 0 },
+                        { name: 'Medium', price: 0.50 },
+                        { name: 'Large', price: 1.00 }
+                    ]
+                },
+                milk: {
+                    title: 'Milk/Cream',
+                    required: false,
+                    type: 'radio',
+                    options: [
+                        { name: 'Regular (Cream)', price: 0 },
+                        { name: 'Milk', price: 0 },
+                        { name: 'Skim Milk', price: 0 },
+                        { name: 'Half & Half', price: 0 },
+                        { name: 'Oat Milk', price: 0.75 },
+                        { name: 'Black (No Milk)', price: 0 }
+                    ]
+                },
+                sugar: {
+                    title: 'Sweetener',
+                    required: false,
+                    type: 'radio',
+                    options: [
+                        { name: 'Regular Sugar', price: 0 },
+                        { name: 'Extra Sugar', price: 0 },
+                        { name: 'Splenda', price: 0 },
+                        { name: 'Sweet N Low', price: 0 },
+                        { name: 'No Sugar', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Extras',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Extra Shot', price: 1.00 },
+                        { name: 'Flavor Shot (Vanilla)', price: 0.75 },
+                        { name: 'Flavor Shot (Hazelnut)', price: 0.75 },
+                        { name: 'Flavor Shot (Caramel)', price: 0.75 }
+                    ]
+                }
+            },
+
+            // GRILLED CHEESE
+            grilledCheese: {
+                bread: {
+                    title: 'Bread Choice',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'White Bread', price: 0 },
+                        { name: 'Wheat Bread', price: 0 },
+                        { name: 'Rye Bread', price: 0 },
+                        { name: 'Sourdough', price: 0.50 }
+                    ]
+                },
+                cheese: {
+                    title: 'Cheese',
+                    required: true,
+                    type: 'radio',
+                    options: [
+                        { name: 'American', price: 0 },
+                        { name: 'Cheddar', price: 0 },
+                        { name: 'Swiss', price: 0 },
+                        { name: 'Provolone', price: 0 },
+                        { name: 'Mozzarella', price: 0 }
+                    ]
+                },
+                extras: {
+                    title: 'Add-ons',
+                    required: false,
+                    type: 'checkbox',
+                    options: [
+                        { name: 'Bacon', price: 2.00 },
+                        { name: 'Tomato', price: 0.50 },
+                        { name: 'Ham', price: 2.00 },
+                        { name: 'Extra Cheese', price: 1.00 }
+                    ]
+                }
+            }
+        };
+
+        // Map menu items to their customization type
+        const itemTypeMap = {
+            // Breakfast
+            'Bacon, Egg & Cheese': 'breakfast',
+            'Sausage, Egg & Cheese': 'breakfast',
+            'Ham, Egg & Cheese': 'breakfast',
+            'Steak, Egg & Cheese': 'breakfast',
+            'Bacon, Egg, Cheese & Avocado': 'breakfast',
+            'The Hungry Man': 'breakfast',
+            'Turkey Bacon or Turkey Sausage, Egg & Cheese': 'breakfast',
+            'Western Omelette Platter': 'breakfast',
+
+            // Cold Heroes
+            'Italian Hero': 'coldHero',
+            'Turkey Club': 'coldHero',
+            'Roast Beef Club': 'coldHero',
+            'Ham & Cheese': 'coldHero',
+            'Turkey Sandwich': 'coldHero',
+            'Tuna Salad Sandwich': 'coldHero',
+            'Honey Turkey Club': 'coldHero',
+            'Pastrami Sandwich': 'coldHero',
+            'Salami Sandwich': 'coldHero',
+
+            // Hot Sandwiches
+            'Chicken Cutlet Hero': 'hotSandwich',
+            'Chicken Parm Hero': 'hotSandwich',
+            'Philly Cheesesteak': 'hotSandwich',
+            'The Reuben': 'hotSandwich',
+            'New York Style Chop Cheese': 'hotSandwich',
+            'BLT': 'hotSandwich',
+            'Hot Roast Beef & Gravy': 'hotSandwich',
+            'Eggplant Parm Hero': 'hotSandwich',
+            'Meatball Parm Hero': 'hotSandwich',
+            'Grilled Cheese': 'grilledCheese',
+
+            // Chicken Over Rice
+            'Chicken Over Rice': 'chickenRice',
+            'Lamb Over Rice': 'chickenRice',
+            'Combo Over Rice': 'chickenRice',
+            'Chicken Teriyaki Platter': 'chickenRice',
+
+            // Wraps
+            'Chicken Caesar Wrap': 'wrap',
+            'Buffalo Chicken Wrap': 'wrap',
+            'Turkey BLT Wrap': 'wrap',
+            'Southwest Wrap': 'wrap',
+            'Grilled Veggie Wrap': 'wrap',
+
+            // Burgers & Hot Dogs
+            'Cheeseburger': 'burger',
+            'Bacon Cheeseburger': 'burger',
+            'Hot Dog': 'hotdog',
+            '2 Hot Dogs & Fries Combo': 'hotdog',
+
+            // Salads
+            'Grilled Chicken Salad': 'salad',
+            'Chicken Caesar Salad': 'salad',
+            'Chef Salad': 'salad',
+            'Greek Salad': 'salad',
+            'Garden Salad': 'salad',
+
+            // Sides
+            'French Fries': 'sides',
+            'Onion Rings': 'sides',
+            'Chicken Wings': 'wings',
+            'Homefries': 'sides',
+
+            // Coffee
+            'Regular Coffee': 'coffee',
+            'Iced Coffee': 'coffee',
+            'Hot Chocolate': 'coffee',
+            'Cappuccino': 'coffee'
+        };
+
+        // Per-item hero upcharges (hero price minus roll price)
+        const heroUpcharges = {
+            // Breakfast: roll → hero
+            'Bacon, Egg & Cheese': 5.00,
+            'Sausage, Egg & Cheese': 5.00,
+            'Ham, Egg & Cheese': 5.00,
+            'Steak, Egg & Cheese': 2.00,
+            'Bacon, Egg, Cheese & Avocado': 4.00,
+            'The Hungry Man': 3.00,
+            'Turkey Bacon or Turkey Sausage, Egg & Cheese': 4.00,
+            // Cold Heroes: roll → hero
+            'Italian Hero': 3.00,
+            'Turkey Club': 4.00,
+            'Roast Beef Club': 4.00,
+            'Ham & Cheese': 4.00,
+            'Turkey Sandwich': 4.00,
+            'Tuna Salad Sandwich': 4.00,
+            'Honey Turkey Club': 4.00,
+            'Pastrami Sandwich': 4.00,
+            'Salami Sandwich': 4.00,
+            // Hot Sandwiches: roll → hero
+            'Chicken Cutlet Hero': 4.00,
+            'Chicken Parm Hero': 4.00,
+            'Philly Cheesesteak': 3.75,
+            'The Reuben': 4.00,
+            'New York Style Chop Cheese': 3.00,
+            'BLT': 4.00,
+            'Hot Roast Beef & Gravy': 4.00,
+            'Eggplant Parm Hero': 4.00,
+            'Meatball Parm Hero': 4.00
+        };
+
+        // Current modal state
+        let currentItem = null;
+        let basePrice = 0;
+        let selections = {};
+        let editingCartItemId = null; // non-null when editing an existing cart item
+
+        // Edit an existing cart item — reopens modal with selections pre-filled
+        function editCartItem(cartItemId) {
+            const item = cart.getItems().find(i => i.id === cartItemId);
+            if (!item || !item.item_type) return;
+
+            editingCartItemId = cartItemId;
+
+            // Look up the price text from the menu DOM for display
+            let priceText = '$' + item.base_price.toFixed(2);
+            let descText = '';
+            document.querySelectorAll('.menu-item').forEach(el => {
+                const nameEl = el.querySelector('h3');
+                if (nameEl && nameEl.textContent === item.item_name) {
+                    const priceEl = el.querySelector('.menu-item-price');
+                    const descEl = el.querySelector('p');
+                    if (priceEl) priceText = priceEl.textContent;
+                    if (descEl) descText = descEl.textContent;
+                }
+            });
+
+            // Open the modal (which builds all sections)
+            openModal(item.item_name, priceText, descText);
+
+            // Pre-fill saved selections
+            if (item.customizations) {
+                for (const [sectionKey, saved] of Object.entries(item.customizations)) {
+                    const optionList = document.querySelector(`[data-section="${sectionKey}"]`);
+                    if (!optionList) continue;
+
+                    if (Array.isArray(saved)) {
+                        // Checkbox selections
+                        saved.forEach(s => {
+                            const opt = optionList.querySelector(`[data-value="${CSS.escape(s.value)}"]`);
+                            if (opt) {
+                                opt.classList.add('selected');
+                                if (!selections[sectionKey]) selections[sectionKey] = [];
+                                selections[sectionKey].push({ value: s.value, price: parseFloat(opt.dataset.price) });
+                            }
+                        });
+                    } else if (saved && saved.value) {
+                        // Radio selection
+                        const opt = optionList.querySelector(`[data-value="${CSS.escape(saved.value)}"]`);
+                        if (opt) {
+                            optionList.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
+                            opt.classList.add('selected');
+                            selections[sectionKey] = { value: saved.value, price: parseFloat(opt.dataset.price) };
+                        }
+                    }
+                }
+            }
+
+            // Pre-fill special instructions
+            const instrField = document.getElementById('specialInstructions');
+            if (instrField && item.special_instructions) {
+                instrField.value = item.special_instructions;
+            }
+
+            // Update button text and total
+            document.querySelector('.add-to-order-btn span:first-child').textContent = 'Update Item';
+            updateTotal();
+        }
+
+        // Open modal with item details
+        function openModal(itemName, itemPrice, itemDescription) {
+            const itemType = itemTypeMap[itemName];
+
+            if (!itemType) {
+                // Item has no customizations — add directly to cart
+                addDirectToCart(itemName, itemPrice);
+                return;
+            }
+
+            // Reset edit mode when opening fresh (not via editCartItem)
+            if (!editingCartItemId) {
+                document.querySelector('.add-to-order-btn span:first-child').textContent = 'Add to Order';
+            }
+
+            currentItem = itemName;
+            // Parse the roll (first) price from "$6.00 / $11.00" or "$14.00" format
+            const priceMatch = itemPrice.match(/\$?([\d.]+)/);
+            basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+            selections = {};
+
+            document.getElementById('modalTitle').textContent = itemName;
+            document.getElementById('modalPrice').textContent = itemPrice;
+            document.getElementById('modalDescription').textContent = itemDescription;
+
+            // Build customization sections
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = '';
+
+            const customizationOptions = customizations[itemType];
+            const upcharge = heroUpcharges[itemName] || 0;
+
+            for (const [sectionKey, section] of Object.entries(customizationOptions)) {
+                // Deep clone options so we can modify hero prices per item
+                let options = section.options.map(opt => ({ ...opt }));
+
+                // Apply per-item hero upcharge to bread options
+                if (sectionKey === 'bread' && upcharge > 0) {
+                    options = options.map(opt => {
+                        if (opt.name === 'Hero' || opt.name === 'Garlic Hero') {
+                            return { ...opt, price: upcharge };
+                        }
+                        return opt;
+                    });
+                }
+
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'customize-section';
+
+                sectionEl.innerHTML = `
+                    <div class="customize-header">
+                        <span class="customize-title">${section.title}</span>
+                        ${section.required ? '<span class="customize-required">Required</span>' : ''}
+                    </div>
+                    <div class="customize-subtitle">${section.type === 'radio' ? 'Select 1' : 'Select any'}</div>
+                    <div class="option-list" data-section="${sectionKey}" data-type="${section.type}">
+                        ${options.map((opt, idx) => `
+                            <div class="option-item" data-value="${opt.name}" data-price="${opt.price}" onclick="selectOption(this, '${sectionKey}', '${section.type}')">
+                                <div class="option-left">
+                                    <div class="${section.type === 'radio' ? 'option-radio' : 'option-checkbox'}"></div>
+                                    <span class="option-label">${opt.name}</span>
+                                </div>
+                                ${opt.price > 0 ? `<span class="option-price">+$${opt.price.toFixed(2)}</span>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                modalBody.appendChild(sectionEl);
+            }
+
+            // Add special instructions
+            modalBody.innerHTML += `
+                <div class="special-instructions">
+                    <label for="specialInstructions">Special Instructions</label>
+                    <textarea id="specialInstructions" placeholder="Any allergies or special requests? Let us know here..."></textarea>
+                </div>
+            `;
+
+            updateTotal();
+            document.getElementById('customizeModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('customizeModal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentItem = null;
+            editingCartItemId = null;
+        }
+
+        // Handle option selection
+        function selectOption(element, sectionKey, type) {
+            const optionList = element.parentElement;
+            const value = element.dataset.value;
+            const price = parseFloat(element.dataset.price);
+
+            if (type === 'radio') {
+                // Deselect all in this section
+                optionList.querySelectorAll('.option-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                element.classList.add('selected');
+                selections[sectionKey] = { value, price };
+            } else {
+                // Toggle checkbox
+                element.classList.toggle('selected');
+
+                if (!selections[sectionKey]) {
+                    selections[sectionKey] = [];
+                }
+
+                if (element.classList.contains('selected')) {
+                    selections[sectionKey].push({ value, price });
+                } else {
+                    selections[sectionKey] = selections[sectionKey].filter(s => s.value !== value);
+                }
+            }
+
+            updateTotal();
+        }
+
+        // Update total price
+        function updateTotal() {
+            let total = basePrice;
+
+            for (const [key, selection] of Object.entries(selections)) {
+                if (Array.isArray(selection)) {
+                    selection.forEach(s => total += s.price);
+                } else if (selection) {
+                    total += selection.price;
+                }
+            }
+
+            document.getElementById('modalTotal').textContent = '$' + total.toFixed(2);
+        }
+
+        // Add to cart from customization modal
+        function addToOrder() {
+            const itemType = itemTypeMap[currentItem];
+
+            // Check required selections
+            const customizationOptions = customizations[itemType];
+            for (const [sectionKey, section] of Object.entries(customizationOptions)) {
+                if (section.required) {
+                    if (section.type === 'radio' && !selections[sectionKey]) {
+                        const sectionEl = document.querySelector(`[data-section="${sectionKey}"]`);
+                        if (sectionEl) sectionEl.closest('.customize-section').scrollIntoView({ behavior: 'smooth' });
+                        showCartToast(`Please select: ${section.title}`);
+                        return;
+                    }
+                }
+            }
+
+            // Calculate total
+            let total = basePrice;
+            for (const [key, selection] of Object.entries(selections)) {
+                if (Array.isArray(selection)) {
+                    selection.forEach(s => total += s.price);
+                } else if (selection) {
+                    total += selection.price;
+                }
+            }
+
+            const specialInstructions = document.getElementById('specialInstructions')?.value || '';
+
+            if (editingCartItemId) {
+                // Update existing cart item
+                cart.updateItem(editingCartItemId, {
+                    customizations: Object.keys(selections).length > 0 ? { ...selections } : null,
+                    special_instructions: specialInstructions,
+                    line_total: +total.toFixed(2),
+                });
+                closeModal();
+                showCartToast(`${currentItem} updated!`);
+            } else {
+                // Add new item
+                cart.addItem({
+                    item_name: currentItem,
+                    item_type: itemType,
+                    base_price: basePrice,
+                    customizations: Object.keys(selections).length > 0 ? { ...selections } : null,
+                    special_instructions: specialInstructions,
+                    line_total: +total.toFixed(2),
+                });
+                closeModal();
+                showCartToast(`${currentItem} added!`);
+            }
+        }
+
+        // Add non-customizable item directly to cart
+        function addDirectToCart(itemName, priceText) {
+            const priceMatch = priceText.match(/\$?([\d.]+)/);
+            const price = priceMatch ? parseFloat(priceMatch[1]) : 0;
+            if (price <= 0) return;
+
+            const menuEntry = Object.keys(itemTypeMap).includes(itemName) ? itemTypeMap[itemName] : null;
+
+            cart.addItem({
+                item_name: itemName,
+                item_type: menuEntry || 'other',
+                base_price: price,
+                customizations: null,
+                special_instructions: '',
+                line_total: price,
+            });
+
+            showCartToast(`${itemName} added!`);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('customizeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize menu items as clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            menuItems.forEach(item => {
+                const nameEl = item.querySelector('h3');
+                const descEl = item.querySelector('p');
+                const priceEl = item.querySelector('.menu-item-price');
+
+                if (nameEl) {
+                    const itemName = nameEl.textContent;
+                    const itemDesc = descEl ? descEl.textContent : '';
+                    const itemPrice = priceEl ? priceEl.textContent : '$0';
+
+                    if (itemTypeMap[itemName]) {
+                        // Customizable — open modal
+                        item.addEventListener('click', () => openModal(itemName, itemPrice, itemDesc));
+                    } else if (itemPrice && itemPrice !== 'Ask' && itemPrice.includes('$')) {
+                        // Non-customizable with a price — add directly to cart
+                        item.style.cursor = 'pointer';
+                        item.addEventListener('click', () => addDirectToCart(itemName, itemPrice));
+                    } else {
+                        // No price / "Ask" — not orderable online
+                        item.classList.add('no-customize');
+                    }
+                }
+            });
+
+            // Initial cart UI render
+            renderCartUI();
+        });
+
+        // ── Cart Drawer Logic ───────────────────────────────
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            const isOpen = drawer.classList.contains('open');
+            if (isOpen) {
+                closeCartDrawer();
+            } else {
+                openCartDrawer();
+            }
+        }
+
+        function openCartDrawer() {
+            document.getElementById('cartDrawer').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            renderCartItems();
+        }
+
+        function closeCartDrawer() {
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function clearCart() {
+            if (confirm('Clear your entire cart?')) {
+                cart.clear();
+                renderCartItems();
+            }
+        }
+
+        function renderCartUI() {
+            const summary = cart.getSummary();
+            const fab = document.getElementById('cartFab');
+            const badge = document.getElementById('cartBadge');
+
+            if (summary.count === 0) {
+                fab.classList.add('empty');
+            } else {
+                fab.classList.remove('empty');
+                badge.textContent = summary.count > 99 ? '99+' : summary.count;
+            }
+        }
+
+        function renderCartItems() {
+            const body = document.getElementById('cartDrawerBody');
+            const footer = document.getElementById('cartDrawerFooter');
+            const items = cart.getItems();
+
+            if (items.length === 0) {
+                body.innerHTML = `
+                    <div class="cart-empty-msg">
+                        <h3>Your cart is empty</h3>
+                        <p>Tap any menu item to get started!</p>
+                    </div>`;
+                footer.style.display = 'none';
+                return;
+            }
+
+            footer.style.display = 'block';
+            body.innerHTML = items.map(item => {
+                const details = cart.getCustomizationSummary(item);
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <span class="cart-item-name">${escapeHtml(item.item_name)}</span>
+                            <span class="cart-item-price">$${item.line_total.toFixed(2)}</span>
+                        </div>
+                        ${details ? `<div class="cart-item-details">${escapeHtml(details)}</div>` : ''}
+                        ${item.special_instructions ? `<div class="cart-item-details"><em>${escapeHtml(item.special_instructions)}</em></div>` : ''}
+                        <div class="cart-item-controls">
+                            <button class="cart-qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+                            <span class="cart-qty-value">${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                            ${item.item_type ? `<button class="cart-item-edit" onclick="editCartItem('${item.id}')">Edit</button>` : ''}
+                            <button class="cart-item-remove" onclick="removeCartItem('${item.id}')">Remove</button>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            const summary = cart.getSummary();
+            document.getElementById('cartSubtotal').textContent = '$' + summary.subtotal.toFixed(2);
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.getItems().find(i => i.id === id);
+            if (item) {
+                cart.updateQuantity(id, item.quantity + delta);
+                renderCartItems();
+            }
+        }
+
+        function removeCartItem(id) {
+            cart.removeItem(id);
+            renderCartItems();
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Cart toast notification
+        function showCartToast(message) {
+            const toast = document.getElementById('cartToast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Listen for cart changes to update FAB
+        cart.onChange(() => {
+            renderCartUI();
+            renderCartItems();
+        });
+    </script>
+</body>
+</html>

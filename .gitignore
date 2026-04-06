@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Misc
+nul
+*.xlsx
+node_modules/
+
+# Wrangler local dev state
+worker/.wrangler/

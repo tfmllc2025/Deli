@@ -1,0 +1,514 @@
+/* ============================
+   Quickstop Super Deli — Marketing Dashboard
+   Matches the deli's retro-modern brutal design system
+   ============================ */
+
+:root {
+    --deli-red: #D62828;
+    --deli-yellow: #F7B32B;
+    --deli-cream: #FFF8E7;
+    --deli-dark: #1A1A1A;
+    --deli-brown: #5C4033;
+    --shadow-sm: 3px 3px 0 var(--deli-dark);
+    --shadow-md: 5px 5px 0 var(--deli-dark);
+    --shadow-lg: 7px 7px 0 var(--deli-dark);
+    --radius: 8px;
+}
+
+/* ---- Reset & Base ---- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deli-cream);
+    color: var(--deli-dark);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Grain overlay matching main site */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* ---- Header ---- */
+
+.dashboard-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--deli-dark);
+    border-bottom: 4px solid var(--deli-yellow);
+    padding: 1rem 1.5rem;
+}
+
+.header-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--deli-red);
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+
+.logo-text span {
+    color: var(--deli-yellow);
+}
+
+/* ---- Main ---- */
+
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.screen-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--deli-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---- Tool Grid (Home Screen) ---- */
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 1.25rem;
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.tool-card:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--deli-dark);
+}
+
+/* Last card (5th) spans full width */
+.tool-card:last-child {
+    grid-column: 1 / -1;
+}
+
+.tool-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    border: 2px solid var(--deli-dark);
+}
+
+.tool-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--deli-dark);
+}
+
+.tool-icon--calendar { background: var(--deli-yellow); }
+.tool-icon--camera { background: #a8dadc; }
+.tool-icon--tag { background: #f4a261; }
+.tool-icon--search { background: #b5e48c; }
+.tool-icon--star { background: #ffd6ff; }
+
+.tool-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    color: var(--deli-dark);
+    margin-bottom: 0.35rem;
+    line-height: 1.1;
+}
+
+.tool-desc {
+    font-size: 0.85rem;
+    color: var(--deli-brown);
+    line-height: 1.4;
+}
+
+/* ---- Tool View ---- */
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--deli-brown);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    -webkit-appearance: none;
+}
+
+.back-btn:active {
+    color: var(--deli-red);
+}
+
+.tool-view-desc {
+    font-size: 1.05rem;
+    color: var(--deli-brown);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+/* ---- Input ---- */
+
+.input-section {
+    margin-bottom: 1.25rem;
+}
+
+.input-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--deli-dark);
+}
+
+textarea {
+    width: 100%;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    border: 3px solid var(--deli-dark);
+    border-radius: var(--radius);
+    background: white;
+    color: var(--deli-dark);
+    resize: vertical;
+    min-height: 80px;
+    box-shadow: var(--shadow-sm);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--deli-red);
+}
+
+textarea::placeholder {
+    color: #aaa;
+}
+
+/* ---- Generate Button ---- */
+
+.generate-btn {
+    width: 100%;
+    padding: 1.1rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    background: var(--deli-red);
+    color: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+}
+
+.generate-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--deli-dark);
+}
+
+.generate-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.generate-btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Spinner */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---- Results ---- */
+
+#results-area {
+    margin-top: 1.5rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#results-content {
+    background: white;
+    border: 3px solid var(--deli-dark);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    overflow-x: auto;
+}
+
+/* Markdown-rendered content styles */
+#results-content h1,
+#results-content h2,
+#results-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--deli-dark);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+#results-content h1 { font-size: 1.8rem; }
+#results-content h2 { font-size: 1.5rem; }
+#results-content h3 { font-size: 1.25rem; }
+
+#results-content h1:first-child,
+#results-content h2:first-child,
+#results-content h3:first-child {
+    margin-top: 0;
+}
+
+#results-content p {
+    margin-bottom: 0.75rem;
+}
+
+#results-content ul,
+#results-content ol {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+}
+
+#results-content li {
+    margin-bottom: 0.35rem;
+}
+
+#results-content strong {
+    color: var(--deli-dark);
+}
+
+/* Code blocks = copy-paste-ready text */
+.code-block-wrapper {
+    position: relative;
+    margin: 0.75rem 0;
+}
+
+.code-block-wrapper pre {
+    background: var(--deli-cream);
+    border: 2px solid var(--deli-dark);
+    border-radius: 6px;
+    padding: 1rem;
+    padding-top: 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--deli-yellow);
+    color: var(--deli-dark);
+    border: 2px solid var(--deli-dark);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--deli-dark);
+    -webkit-appearance: none;
+}
+
+.copy-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+}
+
+.copy-btn.copied {
+    background: #b5e48c;
+}
+
+/* Inline code */
+#results-content code {
+    background: var(--deli-cream);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Don't style code inside pre */
+#results-content pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Horizontal rules */
+#results-content hr {
+    border: none;
+    border-top: 2px dashed var(--deli-brown);
+    margin: 1.5rem 0;
+    opacity: 0.3;
+}
+
+/* ---- Action Buttons (below results) ---- */
+
+.results-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+    background: white;
+    color: var(--deli-dark);
+    border: 3px solid var(--deli-dark);
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    -webkit-appearance: none;
+}
+
+.action-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+}
+
+/* ---- Error State ---- */
+
+#error-area {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #fff0f0;
+    border: 3px solid var(--deli-red);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+#error-message {
+    font-size: 1rem;
+    color: var(--deli-red);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* ---- Streaming cursor ---- */
+
+.streaming-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background: var(--deli-red);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 400px) {
+    .tool-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card:last-child {
+        grid-column: auto;
+    }
+
+    .screen-title {
+        font-size: 1.8rem;
+    }
+
+    .results-actions {
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 600px) {
+    main {
+        padding: 2rem 1.5rem 4rem;
+    }
+
+    .screen-title {
+        font-size: 2.8rem;
+    }
+}

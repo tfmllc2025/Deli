@@ -1,0 +1,45 @@
+{
+  "name": "Quickstop Super Deli",
+  "tagline": "Station Rd",
+  "address": "461 Station Rd, Bellport, NY 11713",
+  "phone": "(631) 286-1491",
+  "website": "https://quickstopsuperdeli.com",
+  "hours": {
+    "open": "5:00 AM",
+    "close": "7:00 PM",
+    "days": "Monday - Sunday"
+  },
+  "delivery_platforms": {
+    "doordash": {
+      "name": "DoorDash",
+      "url": "https://www.doordash.com/convenience/store/quick-stop-super-deli-bellport-36500379/"
+    },
+    "grubhub": {
+      "name": "GrubHub",
+      "url": "https://www.grubhub.com/restaurant/quick-stop-super-deli-461-station-rd-bellport/12684712"
+    }
+  },
+  "menu_categories": [
+    "Breakfast Sandwiches",
+    "Cold Cut Heroes",
+    "Hot Sandwiches",
+    "Chicken Over Rice",
+    "Burgers & Wraps",
+    "Salads",
+    "Coffee & Drinks",
+    "Snacks & Groceries"
+  ],
+  "key_differentiators": [
+    "Right across from Bellport LIRR station",
+    "Open at 5 AM for early commuters",
+    "Classic NYC deli experience on Long Island",
+    "Convenience store essentials",
+    "DoorDash and GrubHub delivery"
+  ],
+  "competitors_area": ["Bellport", "Patchogue", "Medford", "East Patchogue"],
+  "social_accounts": {
+    "instagram": "",
+    "facebook": "",
+    "google_business": ""
+  }
+}

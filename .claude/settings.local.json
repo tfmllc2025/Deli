@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(npm:*)",
+      "Bash(wrangler deploy:*)",
+      "Bash(wrangler secret put:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "WebFetch(domain:docs.clover.com)",
+      "WebFetch(domain:paymentcloudinc.com)",
+      "WebFetch(domain:www.streamorders.com)",
+      "Bash(ls:*)",
+      "Bash(gh auth:*)",
+      "Bash(git config:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}

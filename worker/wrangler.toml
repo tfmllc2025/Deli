@@ -1,0 +1,29 @@
+name = "superdeli-marketing-api"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Secrets (set with `wrangler secret put <NAME>`):
+#   ANTHROPIC_API_KEY  — for marketing dashboard AI proxy
+#   MAPBOX_TOKEN       — for delivery address geocoding (Chunk 5)
+
+# D1 Database — online ordering data
+[[d1_databases]]
+binding = "DB"
+database_name = "superdeli-orders"
+database_id = "0502f30b-bf46-4afe-9b74-f104a0809fc2"
+# Create with: wrangler d1 create superdeli-orders
+# Then replace database_id above with the returned ID
+# Initialize with:
+#   wrangler d1 execute superdeli-orders --file=schema.sql
+#   wrangler d1 execute superdeli-orders --file=seed.sql
+
+# KV Namespace — sessions and rate limiting
+[[kv_namespaces]]
+binding = "KV"
+id = "ac5b3c6509674a01a5ad9ca86efffaab"
+# Create with: wrangler kv namespace create SUPERDELI_SESSIONS
+# Then replace id above with the returned ID
+
+# Cron Trigger — fires scheduled orders to Clover POS
+[triggers]
+crons = ["* * * * *"]

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Quickstop Super Deli | Bellport, NY</title>
+    <meta name="description" content="Complete your order from Quickstop Super Deli. Pickup or delivery in Bellport, NY.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/order.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo-text">QUICKSTOP <span>SUPER DELI</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/menu.html">Menu</a>
+            <a href="/menu.html" class="back-btn">&larr; Back to Menu</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="page-header">
+        <h1>Checkout</h1>
+        <p>Review your order and complete payment</p>
+    </div>
+
+    <div class="checkout-container">
+
+        <!-- Empty Cart State -->
+        <div class="empty-cart" id="emptyCart" style="display: none;">
+            <h2>Your Cart is Empty</h2>
+            <p>Looks like you haven't added anything yet. Head to the menu to start your order!</p>
+            <a href="/menu.html">Browse the Menu</a>
+        </div>
+
+        <!-- Checkout Form (hidden when cart empty) -->
+        <div id="checkoutForm" style="display: none;">
+
+            <!-- Section 1: Cart Review -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <div class="section-title">Your Order</div>
+                </div>
+                <div class="section-body">
+                    <div id="cartReview"></div>
+                    <a href="/menu.html" class="review-edit-link">&larr; Edit order on menu</a>
+                </div>
+            </div>
+
+            <!-- Section 2: Customer Info -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <div class="section-title">Your Info</div>
+                </div>
+                <div class="section-body">
+                    <div class="form-row">
+                        <label for="customerName">Name <span class="required">*</span></label>
+                        <input type="text" id="customerName" placeholder="Your name" autocomplete="name" required>
+                        <div class="form-error" id="nameError">Please enter your name</div>
+                    </div>
+                    <div class="form-row">
+                        <label for="customerPhone">Phone <span class="required">*</span></label>
+                        <input type="tel" id="customerPhone" placeholder="(631) 555-1234" autocomplete="tel" required>
+                        <div class="form-error" id="phoneError">Please enter a valid phone number</div>
+                    </div>
+                    <div class="form-row">
+                        <label for="customerEmail">Email <span style="color: var(--deli-brown); font-weight: 400;">(optional)</span></label>
+                        <input type="email" id="customerEmail" placeholder="you@email.com" autocomplete="email">
+                        <div class="form-hint">For order confirmation — we'll never spam you</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Order Type -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <div class="section-title">Pickup or Delivery</div>
+                </div>
+                <div class="section-body">
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" id="btnPickup" onclick="setOrderType('pickup')">Pickup</button>
+                        <button class="toggle-btn" id="btnDelivery" onclick="setOrderType('delivery')">Delivery</button>
+                    </div>
+
+                    <!-- Delivery Fields (hidden by default) -->
+                    <div class="delivery-fields" id="deliveryFields" style="display: none;">
+                        <div class="form-row">
+                            <label for="deliveryAddress">Delivery Address <span class="required">*</span></label>
+                            <input type="text" id="deliveryAddress" placeholder="123 Main St, Bellport, NY 11713" autocomplete="street-address">
+                            <div class="form-error" id="addressError">Please enter a delivery address</div>
+                        </div>
+                        <div class="address-status" id="addressStatus"></div>
+                        <div class="delivery-minimum-note" id="deliveryMinNote" style="display: none;"></div>
+                    </div>
+
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--deli-brown);">
+                        <strong>Pickup from:</strong> 461 Station Rd, Bellport, NY 11713 (across from LIRR)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Timing -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <div class="section-title">When</div>
+                </div>
+                <div class="section-body">
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" id="btnAsap" onclick="setTiming('asap')">ASAP</button>
+                        <button class="toggle-btn" id="btnSchedule" onclick="setTiming('scheduled')">Schedule Ahead</button>
+                    </div>
+
+                    <div class="schedule-fields" id="scheduleFields" style="display: none;">
+                        <div class="schedule-row">
+                            <div class="form-row">
+                                <label for="scheduleDate">Date</label>
+                                <select id="scheduleDate"></select>
+                            </div>
+                            <div class="form-row">
+                                <label for="scheduleTime">Time</label>
+                                <select id="scheduleTime"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Order Summary -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <div class="section-title">Order Summary</div>
+                </div>
+                <div class="section-body">
+                    <div class="summary-line">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value" id="summarySubtotal">$0.00</span>
+                    </div>
+                    <div class="summary-line fee">
+                        <span class="summary-label">Tax</span>
+                        <span class="summary-value" id="summaryTax">$0.00</span>
+                    </div>
+                    <div class="summary-line fee" id="deliveryFeeLine" style="display: none;">
+                        <span class="summary-label">Delivery Fee</span>
+                        <span class="summary-value" id="summaryDeliveryFee">$0.00</span>
+                    </div>
+                    <div class="summary-line fee" id="serviceFeeLine" style="display: none;">
+                        <span class="summary-label">Service Fee</span>
+                        <span class="summary-value" id="summaryServiceFee">$0.00</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value" id="summaryTotal">$0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Payment -->
+            <div class="checkout-section">
+                <div class="section-header">
+                    <div class="section-number">6</div>
+                    <div class="section-title">Payment</div>
+                </div>
+                <div class="section-body">
+                    <div id="clover-iframe-container">
+                        <div class="payment-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--deli-brown)" stroke-width="1.5">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                            <p>Card payment loading...</p>
+                        </div>
+                    </div>
+                    <div class="payment-secure-note">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span>Payments processed securely by Clover. Card info never touches our server.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Place Order -->
+            <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()" disabled>
+                <span>Place Order</span>
+                <span class="btn-total" id="btnTotal">$0.00</span>
+            </button>
+
+            <div class="global-error" id="globalError"></div>
+        </div>
+
+        <!-- Confirmation Screen (hidden until order placed) -->
+        <div class="confirmation" id="confirmationScreen">
+            <div class="confirm-icon">&#10003;</div>
+            <div class="confirm-order-number" id="confirmOrderNumber">QSD-0405-001</div>
+            <p class="confirm-message" id="confirmMessage">
+                Your order has been placed! We'll start preparing it right away.
+            </p>
+
+            <div class="status-tracker" id="statusTracker">
+                <div class="status-step" data-status="confirmed" id="stepConfirmed">
+                    <div class="status-dot"></div>
+                    <span>Order Confirmed</span>
+                </div>
+                <div class="status-step" data-status="preparing" id="stepPreparing">
+                    <div class="status-dot"></div>
+                    <span>Preparing Your Order</span>
+                </div>
+                <div class="status-step" data-status="ready" id="stepReady">
+                    <div class="status-dot"></div>
+                    <span>Ready for Pickup</span>
+                </div>
+            </div>
+
+            <div class="estimated-time" id="estimatedTime"></div>
+
+            <div class="confirm-actions">
+                <a href="/menu.html" class="btn-primary">Order Again</a>
+                <a href="tel:+16312861491" class="btn-secondary">Call the Deli</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <img src="logo.png" alt="Quickstop Super Deli" class="footer-logo-img">
+        <p>461 Station Rd, Bellport, NY 11713 &middot; <a href="tel:+16312861491">(631) 286-1491</a></p>
+        <p style="margin-top: 0.5rem;"><a href="/">Home</a> &middot; <a href="/menu.html">Menu</a></p>
+        <p style="margin-top: 1rem;">&copy; 2025 Quickstop Super Deli. Bellport, Long Island, NY.</p>
+    </footer>
+
+    <script src="https://checkout.clover.com/sdk.js"></script>
+    <script src="/cart.js"></script>
+    <script src="/order.js"></script>
+</body>
+</html>

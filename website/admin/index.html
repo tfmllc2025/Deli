@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Quickstop Super Deli</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <h1>Admin Panel</h1>
+            <p class="subtitle">Quickstop Super Deli</p>
+            <input type="password" class="pin-input" id="pinInput" placeholder="PIN" maxlength="8" inputmode="numeric" autocomplete="off">
+            <button class="login-btn" id="loginBtn" onclick="doLogin()">Enter</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dash-header">
+            <div class="dash-title">Admin <span>Panel</span></div>
+            <button class="dash-logout" onclick="doLogout()">Logout</button>
+        </div>
+
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('settings')">Settings</button>
+            <button class="tab-btn" onclick="switchTab('specials')">Specials</button>
+            <button class="tab-btn" onclick="switchTab('pins')">PIN Management</button>
+        </div>
+
+        <!-- Tab: Settings -->
+        <div class="tab-content visible" id="tab-settings">
+            <div class="admin-card">
+                <div class="card-header">Online Ordering</div>
+                <div class="card-body">
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Online Ordering</div>
+                            <div class="setting-desc">Allow customers to place orders on the website</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setOrderingEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Scheduled Orders</div>
+                            <div class="setting-desc">Allow customers to order ahead</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setSchedulingEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Max Schedule Days Ahead</div>
+                        <input type="number" class="setting-input" id="setMaxScheduleDays" min="1" max="14" step="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-header">Delivery</div>
+                <div class="card-body">
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Delivery Enabled</div>
+                            <div class="setting-desc">Allow delivery orders</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setDeliveryEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Delivery Radius (miles)</div>
+                        <input type="number" class="setting-input" id="setDeliveryRadius" min="1" max="50" step="0.5">
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Delivery Minimum ($)</div>
+                        <input type="number" class="setting-input" id="setDeliveryMin" min="0" step="1">
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Delivery Fee ($)</div>
+                        <input type="number" class="setting-input" id="setDeliveryFee" min="0" step="0.50">
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-header">Fees & Tax</div>
+                <div class="card-body">
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Service Fee</div>
+                            <div class="setting-desc">Additional fee per order</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setServiceFeeEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Service Fee Amount ($)</div>
+                        <input type="number" class="setting-input" id="setServiceFee" min="0" step="0.25">
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">Tax Rate (%)</div>
+                        <input type="number" class="setting-input" id="setTaxRate" min="0" max="20" step="0.001">
+                    </div>
+                </div>
+            </div>
+
+            <button class="save-btn" id="saveSettingsBtn" onclick="saveSettings()">Save Settings</button>
+            <div class="save-status" id="settingsStatus"></div>
+        </div>
+
+        <!-- Tab: Specials -->
+        <div class="tab-content" id="tab-specials">
+            <div class="admin-card">
+                <div class="card-header">Daily Specials</div>
+                <div class="card-body">
+                    <div class="specials-list" id="specialsList"></div>
+                    <button class="add-special-btn" onclick="openSpecialModal()">+ Add Special</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: PIN Management -->
+        <div class="tab-content" id="tab-pins">
+            <div class="admin-card">
+                <div class="card-header">Change Store PIN</div>
+                <div class="card-body">
+                    <p class="setting-desc" style="margin-bottom: 1rem;">This PIN is used by staff to access the order dashboard.</p>
+                    <div class="pin-row">
+                        <div class="form-row">
+                            <label>Current Store PIN</label>
+                            <input type="password" id="storeCurrentPin" maxlength="8" inputmode="numeric" autocomplete="off">
+                        </div>
+                        <div class="form-row">
+                            <label>New Store PIN</label>
+                            <input type="password" id="storeNewPin" maxlength="8" inputmode="numeric" autocomplete="off">
+                        </div>
+                    </div>
+                    <button class="save-btn" onclick="changePin('store')">Change Store PIN</button>
+                    <div class="save-status" id="storePinStatus"></div>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-header">Change Admin PIN</div>
+                <div class="card-body">
+                    <p class="setting-desc" style="margin-bottom: 1rem;">This PIN is used to access this admin panel.</p>
+                    <div class="pin-row">
+                        <div class="form-row">
+                            <label>Current Admin PIN</label>
+                            <input type="password" id="adminCurrentPin" maxlength="8" inputmode="numeric" autocomplete="off">
+                        </div>
+                        <div class="form-row">
+                            <label>New Admin PIN</label>
+                            <input type="password" id="adminNewPin" maxlength="8" inputmode="numeric" autocomplete="off">
+                        </div>
+                    </div>
+                    <button class="save-btn" onclick="changePin('admin')">Change Admin PIN</button>
+                    <div class="save-status" id="adminPinStatus"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Special Form Modal -->
+    <div class="modal-overlay" id="specialModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="specialModalTitle">Add Special</h2>
+                <button class="modal-close" onclick="closeSpecialModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="specialId">
+                <div class="form-row">
+                    <label for="specialTitle">Title *</label>
+                    <input type="text" id="specialTitle" placeholder="e.g. Taco Tuesday">
+                </div>
+                <div class="form-row">
+                    <label for="specialDesc">Description</label>
+                    <textarea id="specialDesc" placeholder="e.g. 3 tacos for $8 with rice and beans"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="specialDay">Day of Week</label>
+                    <select id="specialDay">
+                        <option value="">Every Day</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>
+                        <input type="checkbox" id="specialActive" checked style="margin-right: 0.5rem;">
+                        Active
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="save-btn" onclick="saveSpecial()" style="margin-top: 0;">Save Special</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Quickstop Super Deli - robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /store/
+Disallow: /admin/
+Disallow: /dashboard/
+
+# Sitemap location
+Sitemap: https://quickstopsuperdeli.com/sitemap.xml

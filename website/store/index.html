@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders | Quickstop Super Deli</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <h1>Order Dashboard</h1>
+            <p class="subtitle">Quickstop Super Deli</p>
+            <input type="password" class="pin-input" id="pinInput" placeholder="PIN" maxlength="8" inputmode="numeric" autocomplete="off">
+            <button class="login-btn" id="loginBtn" onclick="doLogin()">Enter</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dash-header">
+            <div class="dash-left">
+                <div>
+                    <div class="dash-title">Order <span>Dashboard</span></div>
+                    <div class="dash-status" id="pollStatus">Connecting...</div>
+                </div>
+            </div>
+            <div class="dash-right">
+                <button class="mute-btn" id="muteBtn" onclick="toggleMute()">Sound: ON</button>
+                <button class="dash-logout" onclick="doLogout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-filter="active" onclick="setFilter('active')">
+                Active <span class="filter-count" id="countActive">0</span>
+            </button>
+            <button class="filter-btn" data-filter="pending_payment" onclick="setFilter('pending_payment')">
+                Pending <span class="filter-count" id="countPending">0</span>
+            </button>
+            <button class="filter-btn" data-filter="confirmed" onclick="setFilter('confirmed')">
+                Confirmed <span class="filter-count" id="countConfirmed">0</span>
+            </button>
+            <button class="filter-btn" data-filter="preparing" onclick="setFilter('preparing')">
+                Preparing <span class="filter-count" id="countPreparing">0</span>
+            </button>
+            <button class="filter-btn" data-filter="ready" onclick="setFilter('ready')">
+                Ready <span class="filter-count" id="countReady">0</span>
+            </button>
+        </div>
+
+        <div class="orders-container" id="ordersContainer">
+            <div class="empty-orders" id="emptyOrders">
+                <h3>No Active Orders</h3>
+                <p>New orders will appear here automatically.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Order Modal (Prep Time) -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Confirm Order</h2>
+                <p id="confirmModalOrder"></p>
+            </div>
+            <div class="modal-body">
+                <p style="font-weight: 600; margin-bottom: 0.75rem;">Select Prep Time:</p>
+                <div class="prep-options">
+                    <button class="prep-btn" onclick="confirmWithPrep(10)">
+                        <span class="prep-min">10</span>
+                        <span class="prep-label">minutes</span>
+                    </button>
+                    <button class="prep-btn" onclick="confirmWithPrep(15)">
+                        <span class="prep-min">15</span>
+                        <span class="prep-label">minutes</span>
+                    </button>
+                    <button class="prep-btn" onclick="confirmWithPrep(20)">
+                        <span class="prep-min">20</span>
+                        <span class="prep-label">minutes</span>
+                    </button>
+                    <button class="prep-btn" onclick="confirmWithPrep(30)">
+                        <span class="prep-min">30</span>
+                        <span class="prep-label">minutes</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-cancel" onclick="closeConfirmModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
