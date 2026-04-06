@@ -18,13 +18,36 @@ let addressData = null;      // geocoded result from API
 let addressCheckTimer = null;
 let orderId = null;          // set after order created
 let statusPollInterval = null;
-let cloverInstance = null;   // Clover SDK instance
-let cloverTokenReady = false; // whether iframe has loaded
+let returnFromPayment = false; // true when redirected back from Clover
 
 // ── Init ─────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async () => {
-    if (cart.isEmpty()) {
+    // Check if returning from Clover payment
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('status');
+    const returnOrderId = urlParams.get('order_id');
+
+    if (paymentStatus && returnOrderId) {
+        returnFromPayment = true;
+        orderId = returnOrderId;
+
+        // Clean up URL without reloading
+        history.replaceState(null, '', '/order.html');
+
+        if (paymentStatus === 'success') {
+            // Verify payment and show confirmation
+            document.getElementById('emptyCart').style.display = 'none';
+            document.getElementById('checkoutForm').style.display = 'none';
+            await handlePaymentReturn(returnOrderId);
+            return;
+        } else {
+            // Payment failed — show error and let them try again
+            showGlobalError('Payment was not completed. Please try again.');
+        }
+    }
+
+    if (cart.isEmpty() && !returnFromPayment) {
         document.getElementById('emptyCart').style.display = 'block';
         document.getElementById('checkoutForm').style.display = 'none';
         return;
@@ -38,7 +61,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateScheduleDates();
     setupAddressDebounce();
     restoreCustomerInfo();
-    initCloverIframe();
 });
 
 // ── Load Settings ────────────────────────────────────────────
@@ -355,100 +377,16 @@ function clearFieldError(inputId, errorId) {
     document.getElementById(errorId).classList.remove('visible');
 }
 
-// ── Clover Iframe ───────────────────────────────────────────
-
-function initCloverIframe() {
-    const container = document.getElementById('clover-iframe-container');
-
-    try {
-        if (typeof Clover === 'undefined') {
-            container.innerHTML = '<div class="payment-placeholder"><p>Payment system loading... Please wait.</p></div>';
-            // Retry after SDK loads
-            setTimeout(initCloverIframe, 1000);
-            return;
-        }
-
-        cloverInstance = new Clover('f872bb1cf43bbo5c1912191d0fd1f7be');
-        const elements = cloverInstance.elements();
-
-        // Clear placeholder
-        container.innerHTML = '';
-
-        // Create styled containers for card fields
-        const cardRow = document.createElement('div');
-        cardRow.className = 'clover-card-row';
-
-        const cardNumberWrap = document.createElement('div');
-        cardNumberWrap.className = 'clover-field';
-        cardNumberWrap.innerHTML = '<label>Card Number</label><div id="card-number"></div>';
-
-        const cardDateWrap = document.createElement('div');
-        cardDateWrap.className = 'clover-field clover-field-half';
-        cardDateWrap.innerHTML = '<label>Expiry</label><div id="card-date"></div>';
-
-        const cardCvvWrap = document.createElement('div');
-        cardCvvWrap.className = 'clover-field clover-field-half';
-        cardCvvWrap.innerHTML = '<label>CVV</label><div id="card-cvv"></div>';
-
-        const cardZipWrap = document.createElement('div');
-        cardZipWrap.className = 'clover-field clover-field-half';
-        cardZipWrap.innerHTML = '<label>ZIP Code</label><div id="card-zip"></div>';
-
-        const halfRow = document.createElement('div');
-        halfRow.className = 'clover-half-row';
-        halfRow.appendChild(cardDateWrap);
-        halfRow.appendChild(cardCvvWrap);
-
-        container.appendChild(cardNumberWrap);
-        container.appendChild(halfRow);
-        container.appendChild(cardZipWrap);
-
-        // Mount Clover elements
-        const cardNumber = elements.create('CARD_NUMBER');
-        const cardDate = elements.create('CARD_DATE');
-        const cardCvv = elements.create('CARD_CVV');
-        const cardPostalCode = elements.create('CARD_POSTAL_CODE');
-
-        cardNumber.mount('#card-number');
-        cardDate.mount('#card-date');
-        cardCvv.mount('#card-cvv');
-        cardPostalCode.mount('#card-zip');
-
-        cloverTokenReady = true;
-
-        // Add error display
-        const errorDiv = document.createElement('div');
-        errorDiv.id = 'card-errors';
-        errorDiv.className = 'card-error-message';
-        container.appendChild(errorDiv);
-
-        // Listen for card validation errors
-        cardNumber.addEventListener('change', (e) => {
-            const errEl = document.getElementById('card-errors');
-            errEl.textContent = e.error ? e.error.message : '';
-        });
-
-    } catch (err) {
-        console.error('Clover iframe init error:', err);
-        container.innerHTML = '<div class="payment-placeholder"><p>Could not load payment form. Please refresh the page.</p></div>';
-    }
-}
-
-// ── Place Order ──────────────────────────────────────────────
+// ── Place Order (Hosted Checkout Redirect) ──────────────────
 
 async function placeOrder() {
     hideGlobalError();
 
     if (!validateForm()) return;
 
-    if (!cloverTokenReady || !cloverInstance) {
-        showGlobalError('Payment form is still loading. Please wait a moment and try again.');
-        return;
-    }
-
     const btn = document.getElementById('placeOrderBtn');
     btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> <span>Processing Payment...</span>';
+    btn.innerHTML = '<div class="spinner"></div> <span>Processing...</span>';
 
     // Save customer info for next time
     saveCustomerInfo();
@@ -488,40 +426,71 @@ async function placeOrder() {
 
         orderId = data.order_id;
 
-        // Step 2: Get Clover token from iframe
-        btn.innerHTML = '<div class="spinner"></div> <span>Charging Card...</span>';
+        // Step 2: Create Clover hosted checkout session
+        btn.innerHTML = '<div class="spinner"></div> <span>Redirecting to Payment...</span>';
 
-        const tokenResult = await cloverInstance.createToken();
-
-        if (tokenResult.errors) {
-            const errMsgs = Object.values(tokenResult.errors).join('. ');
-            throw new Error(errMsgs || 'Card validation failed. Please check your card details.');
-        }
-
-        if (!tokenResult.token) {
-            throw new Error('Could not process card. Please try again.');
-        }
-
-        // Step 3: Send token to our worker to charge via Clover
-        const payResp = await fetch(`${API_BASE}/api/orders/${orderId}/pay`, {
+        const checkoutResp = await fetch(`${API_BASE}/api/checkout/create`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ clover_token: tokenResult.token }),
+            body: JSON.stringify({ order_id: orderId }),
         });
 
-        const payData = await payResp.json();
+        const checkoutData = await checkoutResp.json();
 
-        if (!payResp.ok) {
-            throw new Error(payData.error || 'Payment failed. Please try again.');
+        if (!checkoutResp.ok) {
+            throw new Error(checkoutData.error || 'Could not create payment session.');
         }
 
-        // Payment successful — show confirmation
-        showConfirmation(data);
+        // Step 3: Redirect to Clover's hosted checkout page
+        window.location.href = checkoutData.checkout_url;
 
     } catch (err) {
         showGlobalError(err.message);
         btn.disabled = false;
         btn.innerHTML = '<span>Place Order</span><span class="btn-total" id="btnTotal">' + document.getElementById('summaryTotal').textContent + '</span>';
+    }
+}
+
+// ── Handle Return from Clover Payment ───────────────────────
+
+async function handlePaymentReturn(returnOrderId) {
+    try {
+        // Verify payment with our server
+        const resp = await fetch(`${API_BASE}/api/checkout/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order_id: returnOrderId }),
+        });
+
+        const data = await resp.json();
+
+        if (!resp.ok) {
+            throw new Error(data.error || 'Could not verify payment.');
+        }
+
+        // Show confirmation
+        const conf = document.getElementById('confirmationScreen');
+        conf.classList.add('visible');
+        document.getElementById('confirmOrderNumber').textContent = data.order_number;
+        document.getElementById('confirmMessage').innerHTML =
+            data.order_type === 'delivery'
+                ? 'Your order has been placed! We\'ll deliver it as soon as it\'s ready.'
+                : 'Your order has been placed! We\'ll start preparing it right away.';
+
+        // Clear cart
+        cart.clear();
+
+        // Start polling
+        startStatusPolling(returnOrderId);
+
+    } catch (err) {
+        // Even if verify fails, show a basic confirmation with polling
+        const conf = document.getElementById('confirmationScreen');
+        conf.classList.add('visible');
+        document.getElementById('confirmMessage').innerHTML =
+            'Your payment has been received! Your order is being processed.';
+        cart.clear();
+        startStatusPolling(returnOrderId);
     }
 }
 

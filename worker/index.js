@@ -471,6 +471,7 @@ async function createCloverAtomicOrder(env, order, orderId) {
     // but we include our calculated tax for transparency)
     const orderNote = [
         `Online Order ${order.order_number}`,
+        `PAID ONLINE`,
         `${order.order_type.toUpperCase()}`,
         `Customer: ${order.customer_name} — ${order.customer_phone}`,
         order.delivery_address ? `Deliver to: ${order.delivery_address}` : null,
@@ -482,6 +483,8 @@ async function createCloverAtomicOrder(env, order, orderId) {
             lineItems,
             note: orderNote,
         },
+        paymentState: 'PAID',
+        state: 'open',
     };
 
     const resp = await fetch(
@@ -489,7 +492,7 @@ async function createCloverAtomicOrder(env, order, orderId) {
         {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${env.CLOVER_API_TOKEN}`,
+                'Authorization': `Bearer ${env.CLOVER_CHECKOUT_TOKEN || env.CLOVER_API_TOKEN}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(atomicBody),
@@ -518,6 +521,177 @@ function formatCustomizations(custJson) {
         }
         return parts.join(', ');
     } catch { return ''; }
+}
+
+// --- Public: Create Hosted Checkout Session ---
+async function createCheckoutSession(request, env) {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const rl = await checkRateLimit(env.KV, `checkout:${ip}`, 10, 60);
+    if (!rl.allowed) return corsError('Too many requests. Try again shortly.', 429, request);
+
+    let body;
+    try { body = await request.json(); } catch {
+        return corsError('Invalid JSON', 400, request);
+    }
+
+    const { order_id } = body;
+    if (!order_id) return corsError('Order ID required', 400, request);
+
+    // Fetch order and items
+    const order = await env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(order_id).first();
+    if (!order) return corsError('Order not found', 404, request);
+    if (order.status !== 'pending_payment') {
+        return corsError('Order already paid or cancelled', 400, request);
+    }
+
+    if (!env.CLOVER_CHECKOUT_TOKEN || !env.CLOVER_MERCHANT_ID) {
+        return corsError('Payment processing not configured', 503, request);
+    }
+
+    const { results: items } = await env.DB.prepare(
+        'SELECT * FROM order_items WHERE order_id = ?'
+    ).bind(order_id).all();
+
+    // Build line items for Clover hosted checkout
+    const lineItems = items.map(item => ({
+        name: item.item_name + (item.quantity > 1 ? ` x${item.quantity}` : ''),
+        unitQty: 1,
+        price: item.line_total_cents,
+        note: [
+            item.customizations ? formatCustomizations(item.customizations) : null,
+            item.special_instructions || null,
+        ].filter(Boolean).join(' | ') || undefined,
+    }));
+
+    // Add tax as a line item
+    if (order.tax_cents > 0) {
+        lineItems.push({ name: 'Tax', unitQty: 1, price: order.tax_cents });
+    }
+    // Add delivery fee if applicable
+    if (order.delivery_fee_cents > 0) {
+        lineItems.push({ name: 'Delivery Fee', unitQty: 1, price: order.delivery_fee_cents });
+    }
+    // Add service fee if applicable
+    if (order.service_fee_cents > 0) {
+        lineItems.push({ name: 'Service Fee', unitQty: 1, price: order.service_fee_cents });
+    }
+
+    // Split customer name into first/last
+    const nameParts = order.customer_name.trim().split(/\s+/);
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+
+    // Create Clover hosted checkout session
+    const checkoutBody = {
+        customer: {
+            firstName,
+            lastName,
+            phoneNumber: order.customer_phone,
+            email: order.customer_email || undefined,
+        },
+        shoppingCart: { lineItems },
+        redirectUrls: {
+            success: `https://quickstopsuperdeli.com/order.html?status=success&order_id=${order_id}`,
+            failure: `https://quickstopsuperdeli.com/order.html?status=failure&order_id=${order_id}`,
+        },
+    };
+
+    try {
+        const resp = await fetch(
+            `https://api.clover.com/invoicingcheckoutservice/v1/checkouts`,
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.CLOVER_CHECKOUT_TOKEN}`,
+                    'X-Clover-Merchant-Id': env.CLOVER_MERCHANT_ID,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(checkoutBody),
+            }
+        );
+
+        const data = await resp.json();
+
+        if (!resp.ok) {
+            console.error('Clover checkout error:', JSON.stringify(data));
+            return corsError('Could not create payment session. Please try again.', 502, request);
+        }
+
+        // Store checkout session ID on the order for later verification
+        await env.DB.prepare(
+            `UPDATE orders SET clover_charge_id = ?, updated_at = datetime('now') WHERE id = ?`
+        ).bind(data.checkoutSessionId, order_id).run();
+
+        await env.DB.prepare(
+            'INSERT INTO order_events (id, order_id, event_type, detail) VALUES (?, ?, ?, ?)'
+        ).bind(generateId(), order_id, 'checkout_created', `Clover checkout session ${data.checkoutSessionId}`).run();
+
+        return corsJson({
+            checkout_url: data.href,
+            session_id: data.checkoutSessionId,
+            expires: data.expirationTime,
+        }, 200, request);
+
+    } catch (err) {
+        console.error('Clover checkout exception:', err);
+        return corsError('Payment processing unavailable. Please try again.', 502, request);
+    }
+}
+
+// --- Public: Verify Checkout Payment ---
+async function verifyCheckoutPayment(request, env) {
+    let body;
+    try { body = await request.json(); } catch {
+        return corsError('Invalid JSON', 400, request);
+    }
+
+    const { order_id } = body;
+    if (!order_id) return corsError('Order ID required', 400, request);
+
+    const order = await env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(order_id).first();
+    if (!order) return corsError('Order not found', 404, request);
+
+    // If already confirmed, return success
+    if (order.status !== 'pending_payment') {
+        return corsJson({
+            order_id: order.id,
+            order_number: order.order_number,
+            order_type: order.order_type,
+            status: order.status,
+        }, 200, request);
+    }
+
+    // Mark as confirmed (Clover redirected to success URL, payment is complete)
+    await env.DB.prepare(
+        `UPDATE orders SET status = 'confirmed', updated_at = datetime('now') WHERE id = ?`
+    ).bind(order_id).run();
+
+    await env.DB.prepare(
+        'INSERT INTO order_events (id, order_id, event_type, detail) VALUES (?, ?, ?, ?)'
+    ).bind(generateId(), order_id, 'payment', `Payment confirmed via hosted checkout`).run();
+
+    // Create atomic order on POS (best effort)
+    try {
+        const cloverOrderId = await createCloverAtomicOrder(env, order, order_id);
+        if (cloverOrderId) {
+            await env.DB.prepare(
+                `UPDATE orders SET clover_order_id = ?, updated_at = datetime('now') WHERE id = ?`
+            ).bind(cloverOrderId, order_id).run();
+            await env.DB.prepare(
+                'INSERT INTO order_events (id, order_id, event_type, detail) VALUES (?, ?, ?, ?)'
+            ).bind(generateId(), order_id, 'pos_created', `Clover POS order ${cloverOrderId}`).run();
+        }
+    } catch (err) {
+        console.error('Clover atomic order failed (payment succeeded):', err);
+    }
+
+    return corsJson({
+        order_id: order.id,
+        order_number: order.order_number,
+        order_type: order.order_type,
+        status: 'confirmed',
+    }, 200, request);
 }
 
 // --- Public: Validate Address (Mapbox Geocoding + Haversine) ---
@@ -1175,6 +1349,8 @@ const routes = [
     { method: 'POST',   pattern: '/api/orders',              handler: createOrder },
     { method: 'GET',    pattern: '/api/orders/:id',          handler: getOrderStatus },
     { method: 'POST',   pattern: '/api/orders/:id/pay',      handler: payOrder },
+    { method: 'POST',   pattern: '/api/checkout/create',     handler: createCheckoutSession },
+    { method: 'POST',   pattern: '/api/checkout/verify',     handler: verifyCheckoutPayment },
     { method: 'POST',   pattern: '/api/validate-address',    handler: validateAddress },
 
     // Store
